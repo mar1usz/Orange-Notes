@@ -12,9 +12,7 @@
     </Window.DataContext>
 
     <Grid>
-        <TextBox Text="{Binding notes[0].content}" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-        <TextBox Text="{Binding notes[0].content}" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
-        <TextBox Text="{Binding notes[1].content}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+        
     </Grid>
 
 </Window>
