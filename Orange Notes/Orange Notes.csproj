@@ -15,8 +15,4 @@
     <ApplicationDefinition Include="View\App.xaml" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="ViewModel\" />
-  </ItemGroup>
-
 </Project>

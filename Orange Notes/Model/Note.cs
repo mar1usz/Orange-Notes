@@ -1,11 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Orange_Notes.Model
+﻿namespace Orange_Notes.Model
 {
-    class Note
+    public class Note
     {
         public string content { get; set; }
+
+        public Note(string content)
+        {
+            this.content = content;
+        }
+
+        public Note()
+        {
+        }
     }
 }
