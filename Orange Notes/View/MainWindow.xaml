@@ -3,16 +3,16 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:ViewModelNamespace="clr-namespace:Orange_Notes.ViewModel"
         mc:Ignorable="d"
-        Title="Orange Notes" Height="450" Width="800">
-
-    <Window.DataContext>
-        <ViewModelNamespace:NoteViewModel/>
-    </Window.DataContext>
+        Title="Orange Notes" Width="200" Height="150">
 
     <Grid>
-        
+        <TextBox HorizontalAlignment="Left" Height="37" Margin="9,9,0,0" Text="{Binding noteTitle}" VerticalAlignment="Top" Width="81"/>
+        <TextBox HorizontalAlignment="Left" Height="46" Margin="9,55,0,0" Text="{Binding noteContent}" VerticalAlignment="Top" Width="171"/>
+        <Button Content="Remove" HorizontalAlignment="Left" Height="21" Margin="96,4,0,0" VerticalAlignment="Top" Width="47" Command="{Binding removeNote}" Click="RemoveButton_Click"/>
+        <Button Content="Add" HorizontalAlignment="Left" Height="21" Margin="143,4,0,0" VerticalAlignment="Top" Width="47" Click="AddButton_Click"/>
+        <Button Content="Settings" HorizontalAlignment="Left" Height="21" Margin="96,25,0,0" VerticalAlignment="Top" Width="47" Click="SettingsButton_Click"/>
+        <Button Content="Close" HorizontalAlignment="Left" Height="21" Margin="143,25,0,0" VerticalAlignment="Top" Width="47" Command="{Binding serialize}" Click="CloseButton_Click"/>
     </Grid>
 
 </Window>

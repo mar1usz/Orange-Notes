@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text.Json;
 
 namespace Orange_Notes.Model
 {
@@ -7,16 +9,20 @@ namespace Orange_Notes.Model
     {
         private List<Note> notes;
 
-        public Notes()
+        public Notes(bool deserialize, string deserializeFilePath)
         {
             notes = new List<Note>();
+
+            if(deserialize == true)
+                Deserialize(deserializeFilePath);
         }
 
-        public void AddNote()
+        public int AddNote()
         {
             if (!notes.Any())
             {
                 notes.Add(new Note(1));
+                return 1;
             }
             else
             {
@@ -24,6 +30,7 @@ namespace Orange_Notes.Model
                 i++;
 
                 notes.Add(new Note(i));
+                return i;
             }
         }
 
@@ -32,11 +39,14 @@ namespace Orange_Notes.Model
             int i = notes.FindIndex(n => n.noteId == noteId);
 
             if (i != -1)
+            {
                 notes.RemoveAt(i);
+                return true;
+            }
             else
+            {
                 return false;
-
-            return true;
+            }
         }
 
         public string GetNoteTitle(int noteId)
@@ -64,11 +74,14 @@ namespace Orange_Notes.Model
             int i = notes.FindIndex(n => n.noteId == noteId);
 
             if (i != -1)
+            {
                 notes[i].noteTitle = noteTitle;
+                return true;
+            }
             else
+            {
                 return false;
-
-            return true;
+            }
         }
 
         public bool SetNoteContent(int noteId, string noteContent)
@@ -76,11 +89,38 @@ namespace Orange_Notes.Model
             int i = notes.FindIndex(n => n.noteId == noteId);
 
             if (i != -1)
+            {
                 notes[i].noteContent = noteContent;
+                return true;
+            }
             else
+            {
                 return false;
+            }            
+        }
 
-            return true;
+        public List<int> GetNoteIds()
+        {
+            List<int> ret = new List<int>();
+            foreach (Note n in notes)
+                ret.Add(n.noteId);
+
+            return ret;
+        }
+
+        public void Serialize(string filePath)
+        {
+            string jsonString = JsonSerializer.Serialize(notes);
+            File.WriteAllText(filePath, jsonString);
+        }
+
+        public void Deserialize(string filePath)
+        {
+            if (File.Exists(filePath))
+            {
+                string jsonString = File.ReadAllText(filePath);
+                notes = JsonSerializer.Deserialize<List<Note>>(jsonString);
+            }
         }
     }
 
@@ -90,10 +130,14 @@ namespace Orange_Notes.Model
         public string noteTitle { get; set; }
         public string noteContent { get; set; }
 
+        public Note()
+        { }
+
         public Note(int noteId)
         {
             this.noteId = noteId;
             this.noteTitle = "Notka" + " " + "#" + noteId;
+            this.noteContent = "";
         }
     }
 }

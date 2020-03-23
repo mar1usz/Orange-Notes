@@ -1,17 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Orange_Notes.ViewModel;
+using System.IO;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Orange_Notes
 {
@@ -20,9 +9,34 @@ namespace Orange_Notes
     /// </summary>
     public partial class MainWindow : Window
     {
+        public MainWindow(int noteId)
+        {
+            InitializeComponent();
+            this.DataContext = new NoteViewModel(noteId);
+        }
         public MainWindow()
         {
             InitializeComponent();
+            this.DataContext = new NoteViewModel();
+        }
+        private void RemoveButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void AddButton_Click(object sender, RoutedEventArgs e)
+        {
+            new MainWindow().Show();
+        }
+
+        private void SettingsButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
         }
     }
 }
