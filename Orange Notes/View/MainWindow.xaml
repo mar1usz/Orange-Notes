@@ -4,15 +4,61 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Orange Notes" Width="200" Height="150">
+        Title="Orange Notes" WindowStyle="None" Background="Transparent" AllowsTransparency="True" Width="200" Height="150" ResizeMode="CanResizeWithGrip" ShowInTaskbar="False">
 
-    <Grid>
-        <TextBox HorizontalAlignment="Left" Height="37" Margin="9,9,0,0" Text="{Binding noteTitle}" VerticalAlignment="Top" Width="81"/>
-        <TextBox HorizontalAlignment="Left" Height="46" Margin="9,55,0,0" Text="{Binding noteContent}" VerticalAlignment="Top" Width="171"/>
-        <Button Content="Remove" HorizontalAlignment="Left" Height="21" Margin="96,4,0,0" VerticalAlignment="Top" Width="47" Command="{Binding removeNote}" Click="RemoveButton_Click"/>
-        <Button Content="Add" HorizontalAlignment="Left" Height="21" Margin="143,4,0,0" VerticalAlignment="Top" Width="47" Click="AddButton_Click"/>
-        <Button Content="Settings" HorizontalAlignment="Left" Height="21" Margin="96,25,0,0" VerticalAlignment="Top" Width="47" Click="SettingsButton_Click"/>
-        <Button Content="Close" HorizontalAlignment="Left" Height="21" Margin="143,25,0,0" VerticalAlignment="Top" Width="47" Command="{Binding serialize}" Click="CloseButton_Click"/>
+    <!--grid-->
+    <Grid ShowGridLines="False">
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!--grid.row 0-->
+        <Border Grid.Row="0" CornerRadius="10,10,0,0" Background="#F27522">
+            <Grid Grid.Row="0">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="19"/>
+                    <ColumnDefinition Width="19"/>
+                    <ColumnDefinition Width="19"/>
+                    <ColumnDefinition Width="24"/>
+                </Grid.ColumnDefinitions>
+
+                <!--note title-->
+                <TextBox Grid.Column="0" Text="{Binding noteTitle}" VerticalAlignment="Center" AcceptsReturn="False" AcceptsTab="True" FontWeight="SemiBold" FontSize="14" Foreground="White" Background="Transparent" CaretBrush="White" BorderThickness="0" Margin="10,0,0,0"/>
+
+                <!--ionicons-->
+                <Button Grid.Column="1" Command="{Binding removeNote}" Click="RemoveButton_Click" Background="Transparent" BorderBrush="Red" BorderThickness="0" Margin="0,0,0,0">
+                    <Path Data="M256,48C141.31,48,48,141.31,48,256s93.31,208,208,208,208-93.31,208-208S370.69,48,256,48Zm80,224H176a16,16,0,0,1,0-32H336a16,16,0,0,1,0,32Z" Fill="White" Stretch="Uniform"/>
+                </Button>
+
+                <Button Grid.Column="2" Click="AddButton_Click" Background="Transparent" BorderThickness="0" Margin="0,0,0,0">
+                    <Path Data="M256,48C141.31,48,48,141.31,48,256s93.31,208,208,208,208-93.31,208-208S370.69,48,256,48Zm80,224H272v64a16,16,0,0,1-32,0V272H176a16,16,0,0,1,0-32h64V176a16,16,0,0,1,32,0v64h64a16,16,0,0,1,0,32Z" Fill="White" Stretch="Uniform"/>
+                </Button>
+
+                <Button Grid.Column="3" Click="SettingsButton_Click" Background="Transparent" BorderThickness="0" Margin="0,0,0,0">
+                    <Path Data="M256,48C141.13,48,48,141.13,48,256s93.13,208,208,208,208-93.13,208-208S370.87,48,256,48ZM166,282a26,26,0,1,1,26-26A26,26,0,0,1,166,282Zm90,0a26,26,0,1,1,26-26A26,26,0,0,1,256,282Zm90,0a26,26,0,1,1,26-26A26,26,0,0,1,346,282Z" Fill="White" Stretch="Uniform"/>
+                </Button>
+
+                <Button Grid.Column="4" Click="CloseButton_Click" Background="Transparent" BorderThickness="0" Margin="0,0,5,0">
+                    <Path Data="M256,48C141.31,48,48,141.31,48,256s93.31,208,208,208,208-93.31,208-208S370.69,48,256,48Zm75.31,260.69a16,16,0,1,1-22.62,22.62L256,278.63l-52.69,52.68a16,16,0,0,1-22.62-22.62L233.37,256l-52.68-52.69a16,16,0,0,1,22.62-22.62L256,233.37l52.69-52.68a16,16,0,0,1,22.62,22.62L278.63,256Z" Fill="White" Stretch="Uniform"/>
+                </Button>
+
+            </Grid>
+        </Border>
+
+        <!--grid.row 1-->
+        <Grid Grid.Row="1">
+            <Border Grid.Row="1" CornerRadius="0,0,10,10" Background="#88FF8B3D">
+
+                <!--note content-->
+                <TextBox Text="{Binding noteContent}" AcceptsReturn="True" AcceptsTab="True" TextWrapping="Wrap" FontSize="14" Foreground="White" Background="Transparent" CaretBrush="White" BorderThickness="0" Margin="10,10,10,10"/>
+
+            </Border>
+        </Grid>
+
     </Grid>
-
+    
 </Window>

@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="View\Icons - Copy\**" />
+    <EmbeddedResource Remove="View\Icons - Copy\**" />
+    <None Remove="View\Icons - Copy\**" />
+    <Page Remove="View\Icons - Copy\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Page Remove="View\App.xaml" />
   </ItemGroup>
 

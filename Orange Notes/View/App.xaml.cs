@@ -10,15 +10,20 @@ namespace Orange_Notes
     {
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            if (NoteViewModel.allNotesIds.Count == 0)
+            if (NoteViewModel.noteIds.Count == 0)
             {
                 new MainWindow().Show();
             }
             else
             {
-                foreach (int noteId in NoteViewModel.allNotesIds)
+                foreach (int noteId in NoteViewModel.noteIds)
                     new MainWindow(noteId).Show();
             }
+        }
+
+        private void Application_Exit(object sender, ExitEventArgs e)
+        {
+            NoteViewModel.serialize();
         }
     }
 }

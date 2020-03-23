@@ -1,6 +1,7 @@
 ﻿using Orange_Notes.ViewModel;
 using System.IO;
 using System.Windows;
+using System.Windows.Input;
 
 namespace Orange_Notes
 {
@@ -9,16 +10,18 @@ namespace Orange_Notes
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow(int noteId)
-        {
-            InitializeComponent();
-            this.DataContext = new NoteViewModel(noteId);
-        }
         public MainWindow()
         {
             InitializeComponent();
             this.DataContext = new NoteViewModel();
         }
+
+        public MainWindow(int noteId)
+        {
+            InitializeComponent();
+            this.DataContext = new NoteViewModel(noteId);
+        }
+
         private void RemoveButton_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
@@ -37,6 +40,12 @@ namespace Orange_Notes
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
+        }
+
+        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        {
+            base.OnMouseLeftButtonDown(e);
+            this.DragMove();
         }
     }
 }
