@@ -101,16 +101,19 @@ namespace Orange_Notes.Model
 
         public List<int> GetNoteIds()
         {
-            List<int> ret = new List<int>();
+            List<int> ids = new List<int>();
             foreach (Note n in notes)
-                ret.Add(n.noteId);
+                ids.Add(n.noteId);
 
-            return ret;
+            return ids;
         }
 
         public void Serialize(string filePath)
         {
-            string jsonString = JsonSerializer.Serialize(notes);
+            JsonSerializerOptions jsonOptions = new JsonSerializerOptions();
+            jsonOptions.WriteIndented = true;
+
+            string jsonString = JsonSerializer.Serialize(notes, jsonOptions);
             File.WriteAllText(filePath, jsonString);
         }
 

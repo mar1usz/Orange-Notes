@@ -1,5 +1,4 @@
 ﻿using Orange_Notes.ViewModel;
-using System.IO;
 using System.Windows;
 using System.Windows.Input;
 
@@ -34,10 +33,10 @@ namespace Orange_Notes
 
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
         {
-
+            
         }
 
-        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        public void CloseButton_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
         }

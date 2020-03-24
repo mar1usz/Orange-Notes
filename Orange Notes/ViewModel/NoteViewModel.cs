@@ -10,9 +10,9 @@ namespace Orange_Notes.ViewModel
 
         public static List<int> noteIds => notes.GetNoteIds();
 
-        public static void serialize() => notes.Serialize("json.json");
+        public static void Serialize() => notes.Serialize("json.json");
 
-        public static void deserialize() => notes.Deserialize("json.json");
+        public static void Deserialize() => notes.Deserialize("json.json");
 
 
         private int noteId;

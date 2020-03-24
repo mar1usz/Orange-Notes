@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.29911.84
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Orange Notes", "Orange Notes\Orange Notes.csproj", "{23501796-7EAB-446E-8E57-3A72421A63EF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orange Notes (NUnit)", "Orange Notes (NUnit)\Orange Notes (NUnit).csproj", "{8CDBAD1C-D367-45B5-A5D8-6A7E60E61FD6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{23501796-7EAB-446E-8E57-3A72421A63EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{23501796-7EAB-446E-8E57-3A72421A63EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{23501796-7EAB-446E-8E57-3A72421A63EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8CDBAD1C-D367-45B5-A5D8-6A7E60E61FD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8CDBAD1C-D367-45B5-A5D8-6A7E60E61FD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8CDBAD1C-D367-45B5-A5D8-6A7E60E61FD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8CDBAD1C-D367-45B5-A5D8-6A7E60E61FD6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -21,9 +21,9 @@ namespace Orange_Notes
             }
         }
 
-        private void Application_Exit(object sender, ExitEventArgs e)
+        public void Application_Exit(object sender, ExitEventArgs e)
         {
-            NoteViewModel.serialize();
+            NoteViewModel.Serialize();
         }
     }
 }
