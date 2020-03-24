@@ -1,5 +1,6 @@
 ﻿using Orange_Notes.ViewModel;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace Orange_Notes

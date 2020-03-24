@@ -139,7 +139,7 @@ namespace Orange_Notes.Model
         public Note(int noteId)
         {
             this.noteId = noteId;
-            this.noteTitle = "Notka" + " " + "#" + noteId;
+            this.noteTitle = "#Notka" + noteId;
             this.noteContent = "";
         }
     }

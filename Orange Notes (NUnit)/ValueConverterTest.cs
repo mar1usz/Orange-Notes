@@ -12,8 +12,8 @@ namespace Orange_Notes__NUnit_
         {
         }
 
-        [TestCase("", "● ")]
-        [TestCase("a", "● a")]
+        [TestCase("", "")]
+        [TestCase("a", "a")]
         [TestCaseSource("ConvertTestData")]
         public void ConvertTest(string in1, string out1)
         {
@@ -27,15 +27,15 @@ namespace Orange_Notes__NUnit_
         {
             string n = System.Environment.NewLine;
 
-
-            yield return new TestCaseData("b" + n, "● b" + n + "● ");
-            yield return new TestCaseData("c" + n + "d", "● c" + n + "● d");
-            yield return new TestCaseData(n + n + "e", "● " + n + "● " + n + "● e");
-            yield return new TestCaseData(n + "f" + n + "g", "● " + n + "● f" + n + "● g");
+            yield return new TestCaseData("b" + n, "● b" + n);
+            yield return new TestCaseData("c" + n + "d", "● c" + n + "d");
+            yield return new TestCaseData("c" + n + "d" + n, "● c" + n + "● d" + n);
+            yield return new TestCaseData(n + n + "e", "● " + n + "● " + n + "e");
+            yield return new TestCaseData("f" + n + n + "g", "● f" + n + "● " + n + "g");
         }
 
-        [TestCase("● ", "")]
-        [TestCase("● a", "a")]
+        [TestCase("", "")]
+        [TestCase("a", "a")]
         [TestCaseSource("ConvertBackTestData")]
         public void ConvertBackTest(string in1, string out1)
         {
@@ -49,11 +49,11 @@ namespace Orange_Notes__NUnit_
         {
             string n = System.Environment.NewLine;
 
-
-            yield return new TestCaseData("● b" + n + "● ", "b" + n);
-            yield return new TestCaseData("● c" + n + "● d", "c" + n + "d");
-            yield return new TestCaseData("● " + n + "● " + n + "● e", n + n + "e");
-            yield return new TestCaseData("● " + n + "● f" + n + "● g", n + "f" + n + "g");
+            yield return new TestCaseData("● b" + n, "b" + n);
+            yield return new TestCaseData("● c" + n + "d", "c" + n + "d");
+            yield return new TestCaseData("● c" + n + "● d" + n, "c" + n + "d" + n);
+            yield return new TestCaseData("● " + n + "● " + n + "e", n + n + "e");
+            yield return new TestCaseData("● f" + n + "● " + n + "g", "f" + n + n + "g");
         }
     }
 }
