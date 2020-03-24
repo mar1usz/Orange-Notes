@@ -9,14 +9,14 @@
 
     <!-- converter -->
     <Window.Resources>
-        <vm:ValueConverter x:Key="noteContentConverter"/>
+        <vm:ValueConverter x:Key="noteTitleConverter"/>
     </Window.Resources>
 
     <!--grid-->
     <Grid ShowGridLines="False">
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="34"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -32,7 +32,7 @@
                     <ColumnDefinition Width="22"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBox Grid.Column="0" Text= "{Binding noteTitle, UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True, Mode=TwoWay}" VerticalAlignment="Center" AcceptsReturn="False" AcceptsTab="True" FontWeight="SemiBold" FontSize="14" Foreground="White" Background="Transparent" CaretBrush="White" BorderThickness="0" Margin="10,0,0,0"/>
+                <TextBox Grid.Column="0" Text="{Binding noteTitle, UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True, Mode=TwoWay, Converter={StaticResource noteTitleConverter}}" VerticalAlignment="Center" AcceptsReturn="False" AcceptsTab="True" FontWeight="SemiBold" FontSize="14" Foreground="White" Background="Transparent" CaretBrush="White" BorderThickness="0" Margin="10,0,0,0"/>
 
                 <Button Grid.Column="1" Command="{Binding removeNote}" Click="RemoveButton_Click" Background="Transparent" BorderBrush="Red" BorderThickness="0" Margin="0,0,0,0">
                     <Path Data="M256,48C141.31,48,48,141.31,48,256s93.31,208,208,208,208-93.31,208-208S370.69,48,256,48Zm80,224H176a16,16,0,0,1,0-32H336a16,16,0,0,1,0,32Z" Fill="White" Stretch="Uniform"/>
@@ -61,7 +61,7 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBox x:Name="noteContent" Grid.Column="0" Text="{Binding noteContent, UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True, Mode=TwoWay, Converter={StaticResource noteContentConverter}}" AcceptsReturn="True" AcceptsTab="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"  FontSize="14" Foreground="White" Background="Transparent" CaretBrush="White" BorderThickness="0" Margin="10,10,10,10"/>
+                <TextBox x:Name="noteContent" Grid.Column="0" Text="{Binding noteContent, UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True, Mode=TwoWay}" AcceptsReturn="True" AcceptsTab="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"  FontSize="14" Foreground="White" Background="Transparent" CaretBrush="White" BorderThickness="0" Margin="10,10,10,10"/>
 
             </Grid>
         </Border>

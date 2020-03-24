@@ -12,9 +12,8 @@ namespace Orange_Notes__NUnit_
         {
         }
 
-        [TestCase("", "")]
-        [TestCase("a", "a")]
-        [TestCaseSource("ConvertTestData")]
+        [TestCase("","")]
+        [TestCase("Notka1", "#Notka1")]
         public void ConvertTest(string in1, string out1)
         {
             ValueConverter c = new ValueConverter();
@@ -23,20 +22,8 @@ namespace Orange_Notes__NUnit_
             Assert.AreEqual(out1, out2);
         }
 
-        public static IEnumerable<TestCaseData> ConvertTestData()
-        {
-            string n = System.Environment.NewLine;
-
-            yield return new TestCaseData("b" + n, "● b" + n);
-            yield return new TestCaseData("c" + n + "d", "● c" + n + "d");
-            yield return new TestCaseData("c" + n + "d" + n, "● c" + n + "● d" + n);
-            yield return new TestCaseData(n + n + "e", "● " + n + "● " + n + "e");
-            yield return new TestCaseData("f" + n + n + "g", "● f" + n + "● " + n + "g");
-        }
-
         [TestCase("", "")]
-        [TestCase("a", "a")]
-        [TestCaseSource("ConvertBackTestData")]
+        [TestCase("#Notka1", "Notka1")]
         public void ConvertBackTest(string in1, string out1)
         {
             ValueConverter c = new ValueConverter();
@@ -45,15 +32,6 @@ namespace Orange_Notes__NUnit_
             Assert.AreEqual(out1, out2);
         }
 
-        public static IEnumerable<TestCaseData> ConvertBackTestData()
-        {
-            string n = System.Environment.NewLine;
 
-            yield return new TestCaseData("● b" + n, "b" + n);
-            yield return new TestCaseData("● c" + n + "d", "c" + n + "d");
-            yield return new TestCaseData("● c" + n + "● d" + n, "c" + n + "d" + n);
-            yield return new TestCaseData("● " + n + "● " + n + "e", n + n + "e");
-            yield return new TestCaseData("● f" + n + "● " + n + "g", "f" + n + n + "g");
-        }
     }
 }
