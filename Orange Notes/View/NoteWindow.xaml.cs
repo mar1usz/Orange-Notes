@@ -1,22 +1,21 @@
 ﻿using Orange_Notes.ViewModel;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace Orange_Notes
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for NoteWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class NoteWindow : Window
     {
-        public MainWindow()
+        public NoteWindow()
         {
             InitializeComponent();
             this.DataContext = new NoteViewModel();
         }
 
-        public MainWindow(int noteId)
+        public NoteWindow(int noteId)
         {
             InitializeComponent();
             this.DataContext = new NoteViewModel(noteId);
@@ -29,7 +28,7 @@ namespace Orange_Notes
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            new MainWindow().Show();
+            new NoteWindow().Show();
         }
 
         private void SettingsButton_Click(object sender, RoutedEventArgs e)

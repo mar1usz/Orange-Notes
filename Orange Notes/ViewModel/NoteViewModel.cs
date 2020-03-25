@@ -6,17 +6,21 @@ namespace Orange_Notes.ViewModel
 {
     public class NoteViewModel : ViewModelBase
     {
-        private static Notes notes = new Notes(true, "json.json");
+        private static Notes notes;
+        private static ISerializer<List<Note>> notesSerializer;
+
+        static NoteViewModel()
+        {
+            NoteViewModel.notesSerializer = new JsonSerializer2<List<Note>>();
+            NoteViewModel.notes = new Notes(notesSerializer, true, "json.json");
+        }
 
         public static List<int> noteIds => notes.GetNoteIds();
-
-        public static void Serialize() => notes.Serialize("json.json");
-
-        public static void Deserialize() => notes.Deserialize("json.json");
+        public static void SerializeNotes() => notes.Serialize("json.json");
+        public static void DeserializeNotes() => notes.Deserialize("json.json");
 
 
         private int noteId;
-
         public string noteTitle
         {
             get
@@ -29,7 +33,6 @@ namespace Orange_Notes.ViewModel
                 NotifyPropertyChanged("noteTitle");
             }
         }
-
         public string noteContent
         {
             get
@@ -42,8 +45,8 @@ namespace Orange_Notes.ViewModel
                 NotifyPropertyChanged("noteContent");
             }
         }
-        public ICommand removeNote { get; }
 
+        public ICommand removeNote { get; }
 
         public NoteViewModel(int noteId)
         {

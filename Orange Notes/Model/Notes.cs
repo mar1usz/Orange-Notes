@@ -7,13 +7,16 @@ namespace Orange_Notes.Model
 {
     public class Notes
     {
+        public ISerializer<List<Note>> serializer;
+
         private List<Note> notes;
 
-        public Notes(bool deserialize, string deserializeFilePath)
+        public Notes(ISerializer<List<Note>> serializer, bool deserialize, string deserializeFilePath)
         {
             notes = new List<Note>();
+            this.serializer = serializer;
 
-            if(deserialize == true)
+            if (deserialize == true)
                 Deserialize(deserializeFilePath);
         }
 
@@ -108,23 +111,9 @@ namespace Orange_Notes.Model
             return ids;
         }
 
-        public void Serialize(string filePath)
-        {
-            JsonSerializerOptions jsonOptions = new JsonSerializerOptions();
-            jsonOptions.WriteIndented = true;
+        public void Serialize(string filePath) => serializer.Serialize(notes, filePath);
 
-            string jsonString = JsonSerializer.Serialize(notes, jsonOptions);
-            File.WriteAllText(filePath, jsonString);
-        }
-
-        public void Deserialize(string filePath)
-        {
-            if (File.Exists(filePath))
-            {
-                string jsonString = File.ReadAllText(filePath);
-                notes = JsonSerializer.Deserialize<List<Note>>(jsonString);
-            }
-        }
+        public void Deserialize(string filePath) => serializer.Deserialize(notes, filePath);
     }
 
     public class Note
