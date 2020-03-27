@@ -8,16 +8,17 @@ namespace Orange_Notes.ViewModel
     {
         private static Notes notes;
         private static ISerializer<List<Note>> notesSerializer;
+        private static string filePath = "json.json";
 
         static NoteViewModel()
         {
             NoteViewModel.notesSerializer = new JsonSerializer2<List<Note>>();
-            NoteViewModel.notes = new Notes(notesSerializer, true, "json.json");
+            NoteViewModel.notes = new Notes(notesSerializer, true, filePath);
         }
 
         public static List<int> noteIds => notes.GetNoteIds();
-        public static void SerializeNotes() => notes.Serialize("json.json");
-        public static void DeserializeNotes() => notes.Deserialize("json.json");
+        public static void SerializeNotes() => notes.Serialize(filePath);
+        public static void DeserializeNotes() => notes.Deserialize(filePath);
 
 
         private int noteId;
