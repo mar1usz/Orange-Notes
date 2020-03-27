@@ -8,7 +8,7 @@ namespace Orange_Notes.ViewModel
     {
         private static Notes notes;
         private static ISerializer<List<Note>> notesSerializer;
-        private static string filePath = "json.json";
+        private static string filePath = "Orange Notes.json";
 
         static NoteViewModel()
         {

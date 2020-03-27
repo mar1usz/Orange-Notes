@@ -61,8 +61,7 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBox x:Name="noteContent" Grid.Column="0" Text="
-                            {Binding noteContent, UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True, Mode=TwoWay}" AcceptsReturn="True" AcceptsTab="True" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" FontSize="14" Foreground="White" Background="Transparent" CaretBrush="White" BorderThickness="0" Margin="10,10,10,10"/>
+                <TextBox x:Name="noteContent" Grid.Column="0" Text="{Binding noteContent, UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True, Mode=TwoWay}" AcceptsReturn="True" AcceptsTab="True" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" FontSize="14" Foreground="White" Background="Transparent" CaretBrush="White" BorderThickness="0" Margin="10,10,10,10"/>
 
             </Grid>
         </Border>
