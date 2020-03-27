@@ -1,15 +1,12 @@
 ﻿using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text.Json;
 
 namespace Orange_Notes.Model
 {
     public class Notes
     {
-        public ISerializer<List<Note>> serializer;
-
         private List<Note> notes;
+        private ISerializer<List<Note>> serializer = null;
 
         public Notes(ISerializer<List<Note>> serializer, bool deserialize, string deserializeFilePath)
         {
@@ -111,9 +108,17 @@ namespace Orange_Notes.Model
             return ids;
         }
 
-        public void Serialize(string filePath) => serializer.Serialize(notes, filePath);
+        public void Serialize(string filePath)
+        {
+            if(serializer != null)
+                serializer.Serialize(notes, filePath);
+        }
 
-        public void Deserialize(string filePath) => serializer.Deserialize(notes, filePath);
+        public void Deserialize(string filePath)
+        {
+            if(serializer != null)
+                serializer.Deserialize(notes, filePath);
+        }
     }
 
     public class Note

@@ -15,4 +15,9 @@
     <ApplicationDefinition Include="View\App.xaml" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Google.Apis.Drive.v3" Version="1.44.1.1888" />
+    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.2.0" />
+  </ItemGroup>
+
 </Project>
