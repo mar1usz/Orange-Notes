@@ -14,7 +14,7 @@ namespace Orange_Notes.Model
             File.WriteAllText(filePath, jsonString);
         }
 
-        public static void Deserialize(T objToDeserialize, string filePath)
+        public static void Deserialize(ref T objToDeserialize, string filePath)
         {
             if (File.Exists(filePath))
             {

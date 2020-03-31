@@ -115,7 +115,7 @@ namespace Orange_Notes.Model
 
         public void Deserialize(string filePath)
         {
-            JsonSerializer2<List<Note>>.Deserialize(notes, filePath);
+            JsonSerializer2<List<Note>>.Deserialize(ref notes, filePath);
         }
     }
 
