@@ -6,15 +6,15 @@ namespace Orange_Notes.Model
     public class Notes
     {
         private List<Note> notes;
-        private ISerializer<List<Note>> serializer = null;
 
-        public Notes(ISerializer<List<Note>> serializer, bool deserialize, string deserializeFilePath)
+        public Notes(bool deserialize, string deserializeFilePath)
         {
             notes = new List<Note>();
-            this.serializer = serializer;
 
             if (deserialize == true)
                 Deserialize(deserializeFilePath);
+            else
+                AddNote();
         }
 
         public int AddNote()
@@ -110,14 +110,12 @@ namespace Orange_Notes.Model
 
         public void Serialize(string filePath)
         {
-            if(serializer != null)
-                serializer.Serialize(notes, filePath);
+            JsonSerializer2<List<Note>>.Serialize(notes, filePath);
         }
 
         public void Deserialize(string filePath)
         {
-            if(serializer != null)
-                serializer.Deserialize(notes, filePath);
+            JsonSerializer2<List<Note>>.Deserialize(notes, filePath);
         }
     }
 

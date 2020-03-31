@@ -3,9 +3,9 @@ using System.Text.Json;
 
 namespace Orange_Notes.Model
 {
-    public class JsonSerializer2<T> : ISerializer<T>
+    public static class JsonSerializer2<T>
     {
-        public void Serialize(T objToSerialize, string filePath)
+        public static void Serialize(T objToSerialize, string filePath)
         {
             JsonSerializerOptions jsonOptions = new JsonSerializerOptions();
             jsonOptions.WriteIndented = true;
@@ -14,7 +14,7 @@ namespace Orange_Notes.Model
             File.WriteAllText(filePath, jsonString);
         }
 
-        public void Deserialize(T objToDeserialize, string filePath)
+        public static void Deserialize(T objToDeserialize, string filePath)
         {
             if (File.Exists(filePath))
             {

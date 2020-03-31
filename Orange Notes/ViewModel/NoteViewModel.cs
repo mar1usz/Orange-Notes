@@ -7,18 +7,17 @@ namespace Orange_Notes.ViewModel
     public class NoteViewModel : ViewModelBase
     {
         private static Notes notes;
-        private static ISerializer<List<Note>> notesSerializer;
-        private static string filePath = "Orange Notes.json";
+        public static string filePath { get; set; } = "Orange Notes.json";
 
         static NoteViewModel()
         {
-            NoteViewModel.notesSerializer = new JsonSerializer2<List<Note>>();
-            NoteViewModel.notes = new Notes(notesSerializer, true, filePath);
+            notes = new Notes(true, filePath);
         }
 
         public static List<int> noteIds => notes.GetNoteIds();
         public static void SerializeNotes() => notes.Serialize(filePath);
         public static void DeserializeNotes() => notes.Deserialize(filePath);
+        public static void UploadNotesToGoogleDrive() => GoogleDriveService.UploadOrUpdateFile(filePath);
 
 
         private int noteId;
@@ -57,7 +56,7 @@ namespace Orange_Notes.ViewModel
 
         public NoteViewModel()
         {
-            noteId = notes.AddNote();
+            this.noteId = notes.AddNote();
             this.removeNote = new RelayCommand(parameter => notes.RemoveNote(noteId));
         }
     }
