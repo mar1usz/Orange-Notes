@@ -1,2 +1,2 @@
 # Orange-Notes
-Sticky note app in C#
+Sticky notes app in C# with Google Drive Api and Json.
