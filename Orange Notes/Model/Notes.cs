@@ -7,16 +7,6 @@ namespace Orange_Notes.Model
     {
         private List<Note> notes;
 
-        public Notes(bool deserialize, string deserializeFilePath)
-        {
-            notes = new List<Note>();
-
-            if (deserialize == true)
-                Deserialize(deserializeFilePath);
-            else
-                AddNote();
-        }
-
         public int AddNote()
         {
             if (!notes.Any())
@@ -108,14 +98,26 @@ namespace Orange_Notes.Model
             return ids;
         }
 
-        public void Serialize(string filePath)
+        public void JsonSerialize(string filePath)
         {
             JsonSerializer2<List<Note>>.Serialize(notes, filePath);
         }
 
-        public void Deserialize(string filePath)
+        public void JsonDeserialize(string filePath)
         {
             JsonSerializer2<List<Note>>.Deserialize(ref notes, filePath);
+        }
+
+        public void GoogleDriveUpload(string fileName, string credentialsFilePath)
+        {
+            GoogleDrive<List<Note>>.Authorize(credentialsFilePath);
+            GoogleDrive<List<Note>>.UploadFile(notes, fileName);
+        }
+
+        public void GoogleDriveDownload(string fileName, string credentialsFilePath)
+        {
+            GoogleDrive<List<Note>>.Authorize(credentialsFilePath);
+            GoogleDrive<List<Note>>.DownloadFile(ref notes, fileName);
         }
     }
 

@@ -13,10 +13,14 @@ namespace Orange_Notes
     {
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            Process proc = Process.GetCurrentProcess();
-            if (Process.GetProcesses().Where(p => p.ProcessName == proc.ProcessName).Count() > 1)
+            bool applicationUnique = Application_Unique();
+            if (!applicationUnique)
+            {
                 Environment.Exit(0);
+            }
 
+
+            NoteViewModel.ReadNotes();
             if (NoteViewModel.noteIds.Count == 0)
             {
                 new NoteWindow().Show();
@@ -30,10 +34,17 @@ namespace Orange_Notes
             }
         }
 
-        public void Application_Exit(object sender, ExitEventArgs e)
+        private bool Application_Unique()
         {
-            NoteViewModel.SerializeNotes();
-            NoteViewModel.UploadNotesToGoogleDrive();
+            string processName = Process.GetCurrentProcess().ProcessName;
+            int processCount = Process.GetProcesses().Where(p => p.ProcessName == processName).Count();
+            
+            return processCount > 1 ? false : true;
+        }
+
+        private void Application_Exit(object sender, ExitEventArgs e)
+        {
+            NoteViewModel.SaveNotes();
         }
     }
 }

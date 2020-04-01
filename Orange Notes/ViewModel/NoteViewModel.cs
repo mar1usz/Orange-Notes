@@ -6,18 +6,12 @@ namespace Orange_Notes.ViewModel
 {
     public class NoteViewModel : ViewModelBase
     {
-        private static Notes notes;
-        public static string filePath { get; set; } = "Orange Notes.json";
-
-        static NoteViewModel()
-        {
-            notes = new Notes(true, filePath);
-        }
-
+        private static Notes notes = new Notes();
         public static List<int> noteIds => notes.GetNoteIds();
-        public static void SerializeNotes() => notes.Serialize(filePath);
-        public static void DeserializeNotes() => notes.Deserialize(filePath);
-        public static void UploadNotesToGoogleDrive() => GoogleDriveService.UploadOrUpdateFile(filePath);
+        //public static void SaveNotes() => notes.JsonSerialize("Orange Notes.json");
+        public static void SaveNotes() => notes.GoogleDriveUpload("Orange Notes.json", "credentials.json");
+        //public static void ReadNotes() => notes.JsonDeserialize("Orange Notes.json");
+        public static void ReadNotes() => notes.GoogleDriveDownload("Orange Notes.json", "credentials.json");
 
 
         private int noteId;

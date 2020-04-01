@@ -3,7 +3,7 @@ using System.Text.Json;
 
 namespace Orange_Notes.Model
 {
-    public static class JsonSerializer2<T>
+    public static class JsonSerializer2<T> where T : new()
     {
         public static void Serialize(T objToSerialize, string filePath)
         {
