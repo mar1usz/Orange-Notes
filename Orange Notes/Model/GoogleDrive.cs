@@ -17,7 +17,7 @@ namespace Orange_Notes.Model
         public static void Authorize(string credentialsFilePath)
         {
             if (!System.IO.File.Exists(credentialsFilePath))
-                throw new FileNotFoundException("You need 'credentials.json' to run this (see github prerequistses)");
+                throw new FileNotFoundException("File '" + credentialsFilePath + "' wasn't found (see github prerequistses)");
 
             string[] Scopes = { DriveService.Scope.DriveFile };
             string ApplicationName = "Orange Notes";

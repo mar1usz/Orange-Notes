@@ -14,7 +14,7 @@ namespace Orange_Notes.ViewModel
         public static void ReadNotes() => notes.GoogleDriveDownload("Orange Notes.json", "credentials.json");
 
 
-        private int noteId;
+        public int noteId { get; }
         public string noteTitle
         {
             get

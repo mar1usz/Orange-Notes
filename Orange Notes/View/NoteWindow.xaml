@@ -21,7 +21,7 @@
         </Grid.RowDefinitions>
 
         <!--grid row 0-->
-        <Border Grid.Row="0" CornerRadius="10,10,0,0" Background="#F27522">
+        <Border Grid.Row="0" CornerRadius="10,10,0,0" Background="#f27522">
             <Grid Grid.Row="0">
 
                 <Grid.ColumnDefinitions>
@@ -34,34 +34,35 @@
 
                 <TextBox Grid.Column="0" Text="{Binding noteTitle, UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True, Mode=TwoWay, Converter={StaticResource noteTitleConverter}}" VerticalAlignment="Center" AcceptsReturn="False" AcceptsTab="True" FontWeight="SemiBold" FontSize="14" Foreground="White" Background="Transparent" CaretBrush="White" BorderThickness="0" Margin="10,0,0,0"/>
 
-                <Button Grid.Column="1" Command="{Binding removeNote}" Click="RemoveButton_Click" Background="Transparent" BorderThickness="0" Margin="0,0,0,0">
-                    <Path Data="M256,48C141.31,48,48,141.31,48,256s93.31,208,208,208,208-93.31,208-208S370.69,48,256,48Zm80,224H176a16,16,0,0,1,0-32H336a16,16,0,0,1,0,32Z" Fill="White" Stretch="Uniform"/>
+                <Button Name="removeBtn" Grid.Column="1" Command="{Binding removeNote}" Click="RemoveButton_Click" Background="Transparent" BorderThickness="0" Margin="0,0,0,0">
+                    <Path Data="M256,48C141.31,48,48,141.31,48,256s93.31,208,208,208,208-93.31,208-208S370.69,48,256,48Zm80,224H176a16,16,0,0,1,0-32H336a16,16,0,0,1,0,32Z" Fill="{Binding ElementName=removeBtn, Path=Foreground}" Stretch="Uniform"/>
                 </Button>
 
-                <Button Grid.Column="2" Click="AddButton_Click" Background="Transparent" BorderThickness="0" Margin="0,0,0,0">
-                    <Path Data="M256,48C141.31,48,48,141.31,48,256s93.31,208,208,208,208-93.31,208-208S370.69,48,256,48Zm80,224H272v64a16,16,0,0,1-32,0V272H176a16,16,0,0,1,0-32h64V176a16,16,0,0,1,32,0v64h64a16,16,0,0,1,0,32Z" Fill="White" Stretch="Uniform"/>
+                <Button Name="addBtn" Grid.Column="2" Click="AddButton_Click" Background="Transparent" BorderThickness="0" Margin="0,0,0,0">
+                    <Path Data="M256,48C141.31,48,48,141.31,48,256s93.31,208,208,208,208-93.31,208-208S370.69,48,256,48Zm80,224H272v64a16,16,0,0,1-32,0V272H176a16,16,0,0,1,0-32h64V176a16,16,0,0,1,32,0v64h64a16,16,0,0,1,0,32Z" Fill="{Binding ElementName=addBtn, Path=Foreground}" Stretch="Uniform"/>
                 </Button>
 
-                <Button Grid.Column="3" Click="SettingsButton_Click" Background="Transparent" BorderThickness="0" Margin="0,0,0,0">
-                    <Path Data="M256,48C141.13,48,48,141.13,48,256s93.13,208,208,208,208-93.13,208-208S370.87,48,256,48ZM166,282a26,26,0,1,1,26-26A26,26,0,0,1,166,282Zm90,0a26,26,0,1,1,26-26A26,26,0,0,1,256,282Zm90,0a26,26,0,1,1,26-26A26,26,0,0,1,346,282Z" Fill="White" Stretch="Uniform"/>
+                <Button Name="settingsBtn" Grid.Column="3" Click="SettingsButton_Click" Background="Transparent" BorderThickness="0" Margin="0,0,0,0">
+                    <Path Data="M256,48C141.13,48,48,141.13,48,256s93.13,208,208,208,208-93.13,208-208S370.87,48,256,48ZM166,282a26,26,0,1,1,26-26A26,26,0,0,1,166,282Zm90,0a26,26,0,1,1,26-26A26,26,0,0,1,256,282Zm90,0a26,26,0,1,1,26-26A26,26,0,0,1,346,282Z" Fill="{Binding ElementName=settingsBtn, Path=Foreground}" Stretch="Uniform"/>
                 </Button>
 
-                <Button Grid.Column="4" Click="CloseButton_Click" Background="Transparent" BorderThickness="0" Margin="0,0,5,0">
-                    <Path Data="M256,48C141.31,48,48,141.31,48,256s93.31,208,208,208,208-93.31,208-208S370.69,48,256,48Zm75.31,260.69a16,16,0,1,1-22.62,22.62L256,278.63l-52.69,52.68a16,16,0,0,1-22.62-22.62L233.37,256l-52.68-52.69a16,16,0,0,1,22.62-22.62L256,233.37l52.69-52.68a16,16,0,0,1,22.62,22.62L278.63,256Z" Fill="White" Stretch="Uniform"/>
+                <Button Name="closeBtn" Grid.Column="4" Click="CloseButton_Click" Background="Transparent" BorderThickness="0" Margin="0,0,5,0">
+                    <Path Data="M256,48C141.31,48,48,141.31,48,256s93.31,208,208,208,208-93.31,208-208S370.69,48,256,48Zm75.31,260.69a16,16,0,1,1-22.62,22.62L256,278.63l-52.69,52.68a16,16,0,0,1-22.62-22.62L233.37,256l-52.68-52.69a16,16,0,0,1,22.62-22.62L256,233.37l52.69-52.68a16,16,0,0,1,22.62,22.62L278.63,256Z" Fill="{Binding ElementName=closeBtn, Path=Foreground}" Stretch="Uniform"/>
                 </Button>
 
             </Grid>
         </Border>
 
         <!--grid row 1-->
-        <Border Grid.Row="1" CornerRadius="0,0,10,10" Background="#88FF8B3D">
+        <Border Grid.Row="1" CornerRadius="0,0,10,10" Background="#88ff8b3d">
             <Grid Grid.Row="1">
 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBox x:Name="noteContent" Grid.Column="0" Text="{Binding noteContent, UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True, Mode=TwoWay}" AcceptsReturn="True" AcceptsTab="True" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" FontSize="14" Foreground="White" Background="Transparent" CaretBrush="White" BorderThickness="0" Margin="10,10,10,10"/>
+                <TextBox x:Name="noteContent" Grid.Column="0" Text="
+                         {Binding noteContent, UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True, Mode=TwoWay}" AcceptsReturn="True" AcceptsTab="True" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" FontSize="14" Foreground="White" Background="Transparent" CaretBrush="White" BorderThickness="0" Margin="10,10,10,10"/>
 
             </Grid>
         </Border>
