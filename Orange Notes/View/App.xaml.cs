@@ -1,5 +1,4 @@
-﻿using Orange_Notes.Model;
-using Orange_Notes.ViewModel;
+﻿using Orange_Notes.ViewModel;
 using System;
 using System.Diagnostics;
 using System.Linq;
