@@ -1,8 +1,9 @@
 ﻿using Orange_Notes.ViewModel;
 using System.Windows;
 using System.Windows.Input;
+using System.Linq;
 
-namespace Orange_Notes
+namespace Orange_Notes.View
 {
     /// <summary>
     /// Interaction logic for NoteWindow.xaml
@@ -34,7 +35,9 @@ namespace Orange_Notes
 
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
         {
-            
+            WindowCollection allWindows = Application.Current.Windows;
+            if (allWindows.OfType<SettingsWindow>().Count() < 1)
+                new SettingsWindow().Show();
         }
 
         public void CloseButton_Click(object sender, RoutedEventArgs e)

@@ -10,8 +10,8 @@ namespace Orange_Notes.ViewModel
         public static List<int> noteIds => notes.GetNoteIds();
         //public static void SaveNotes() => notes.JsonSerialize("Orange Notes.json");
         public static void SaveNotes() => notes.GoogleDriveUpload("Orange Notes.json", "credentials.json");
-        //public static void ReadNotes() => notes.JsonDeserialize("Orange Notes.json");
-        public static void ReadNotes() => notes.GoogleDriveDownload("Orange Notes.json", "credentials.json");
+        //public static void LoadNotes() => notes.JsonDeserialize("Orange Notes.json");
+        public static void LoadNotes() => notes.GoogleDriveDownload("Orange Notes.json", "credentials.json");
 
 
         public int noteId { get; }

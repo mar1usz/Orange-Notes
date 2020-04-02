@@ -1,5 +1,5 @@
 # Orange-Notes
-Sticky notes app in C# with Google Drive.
+Sticky notes app in C# with Google Drive API.
 
 ## Prerequisites:
 - Visual Studio 2019
