@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using Orange_Notes.ViewModel;
 using System.Windows;
 using System.Windows.Input;
 
@@ -14,7 +15,9 @@ namespace Orange_Notes.View
         public SettingsWindow()
         {
             InitializeComponent();
-            StartupCheckBox_Set();
+            StartupCheckBox_Refresh();
+            StorageCheckboxes_Refresh();
+            this.KeyDown += Window_KeyDown;
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
@@ -26,21 +29,6 @@ namespace Orange_Notes.View
         {
             base.OnMouseLeftButtonDown(e);
             this.DragMove();
-        }
-
-        private void StartupCheckBox_Set()
-        {
-            using (RegistryKey regKey = Registry.CurrentUser.OpenSubKey(startupReg, true))
-            {
-                if (regKey.GetValue("Orange Notes") == null)
-                {
-                    startupCheckbox.IsChecked = false;
-                }
-                else
-                {
-                    startupCheckbox.IsChecked = true;
-                }
-            }
         }
 
         private void StartupCheckBox_Click(object sender, RoutedEventArgs e)
@@ -55,6 +43,64 @@ namespace Orange_Notes.View
                 {
                     regKey.DeleteValue("Orange Notes", true);
                 }
+            }
+        }
+
+        private void StartupCheckBox_Refresh()
+        {
+            using (RegistryKey regKey = Registry.CurrentUser.OpenSubKey(startupReg, true))
+            {
+                if (regKey.GetValue("Orange Notes") == null)
+                {
+                    startupCheckbox.IsChecked = false;
+                }
+                else
+                {
+                    startupCheckbox.IsChecked = true;
+                }
+            }
+        }
+
+        private void JsonCheckBox_Click(object sender, RoutedEventArgs e)
+        {
+            if (jsonCheckbox.IsChecked == true)
+            {
+                NoteViewModel.storage = Storage.Json;
+            }
+
+            StorageCheckboxes_Refresh();
+        }
+
+        private void GoogleDriveCheckBox_Click(object sender, RoutedEventArgs e)
+        {
+            if (jsonCheckbox.IsChecked == true)
+            {
+                NoteViewModel.storage = Storage.GoogleDrive;
+            }
+
+            StorageCheckboxes_Refresh();
+        }
+
+        private void StorageCheckboxes_Refresh()
+        {
+            jsonCheckbox.IsChecked = false;
+            googleDriveCheckbox.IsChecked = false;
+
+            if (NoteViewModel.storage == Storage.Json)
+            {
+                jsonCheckbox.IsChecked = true;
+            }
+            else if (NoteViewModel.storage == Storage.GoogleDrive)
+            {
+                googleDriveCheckbox.IsChecked = true;
+            }
+        }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.Escape)
+            {
+                this.Close();
             }
         }
     }

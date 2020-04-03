@@ -21,6 +21,10 @@ namespace Orange_Notes.Model
                 string jsonString = File.ReadAllText(filePath);
                 objToDeserialize = JsonSerializer.Deserialize<T>(jsonString);
             }
+            else
+            {
+                objToDeserialize = new T();
+            }
         }
     }
 }

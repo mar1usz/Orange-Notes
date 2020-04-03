@@ -1,5 +1,11 @@
-# Orange-Notes
-Sticky notes app in C# with Google Drive API.
+﻿# Orange Notes 🍊
+Sticky notes app in C# with Google Drive.
+
+## Features:
+- Save notes on your desktop
+- Store notes in .json file either locally or on Google Drive
+- Run at startup (optional)
+- Doesn't take any space in your taskbar
 
 ## Prerequisites:
 - Visual Studio 2019

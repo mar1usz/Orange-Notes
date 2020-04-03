@@ -30,6 +30,7 @@ namespace Orange_Notes.View
 
         private void Application_Load()
         {
+            NoteViewModel.LoadSettings();
             NoteViewModel.LoadNotes();
             if (NoteViewModel.noteIds.Count == 0)
             {
@@ -52,6 +53,7 @@ namespace Orange_Notes.View
         private void Application_Save()
         {
             NoteViewModel.SaveNotes();
+            NoteViewModel.SaveSettings();
         }
     }
 }

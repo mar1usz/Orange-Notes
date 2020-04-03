@@ -4,17 +4,62 @@ using System.Windows.Input;
 
 namespace Orange_Notes.ViewModel
 {
+    public enum Storage
+    {
+        Json,
+        GoogleDrive
+    }
+
     public class NoteViewModel : ViewModelBase
     {
         private static Notes notes = new Notes();
-        public static List<int> noteIds => notes.GetNoteIds();
-        //public static void SaveNotes() => notes.JsonSerialize("Orange Notes.json");
-        public static void SaveNotes() => notes.GoogleDriveUpload("Orange Notes.json", "credentials.json");
-        //public static void LoadNotes() => notes.JsonDeserialize("Orange Notes.json");
-        public static void LoadNotes() => notes.GoogleDriveDownload("Orange Notes.json", "credentials.json");
+        public static Storage storage = Storage.Json;
+
+        public static List<int> noteIds
+        {
+            get
+            {
+                return notes.GetNoteIds();
+            }
+        }
+
+    public static void SaveNotes()
+        {
+            if (storage == Storage.Json)
+            {
+                notes.JsonSerialize("Orange Notes.json");
+            }
+            else if (storage == Storage.GoogleDrive)
+            {
+                notes.GoogleDriveUpload("Orange Notes.json", "credentials.json");
+            }
+        }
+            
+        public static void LoadNotes()
+        {
+            if (storage == Storage.Json)
+            {
+                notes.JsonDeserialize("Orange Notes.json");
+            }
+            else if (storage == Storage.GoogleDrive)
+            {
+                notes.GoogleDriveDownload("Orange Notes.json", "credentials.json");
+            }
+        }
+
+        public static void SaveSettings()
+        {
+            JsonSerializer2<Storage>.Serialize(storage, "Orange Notes Settings.json");
+        }
+
+        public static void LoadSettings()
+        {
+            JsonSerializer2<Storage>.Deserialize(ref storage, "Orange Notes Settings.json");
+        }
 
 
         public int noteId { get; }
+
         public string noteTitle
         {
             get
@@ -27,6 +72,7 @@ namespace Orange_Notes.ViewModel
                 NotifyPropertyChanged("noteTitle");
             }
         }
+
         public string noteContent
         {
             get

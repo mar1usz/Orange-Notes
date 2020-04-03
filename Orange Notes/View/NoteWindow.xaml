@@ -55,7 +55,7 @@
 
         <!--grid row 1-->
         <Border Grid.Row="1" CornerRadius="0,0,10,10" Background="#88ff8b3d">
-            <Grid Grid.Row="1">
+            <Grid>
 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
