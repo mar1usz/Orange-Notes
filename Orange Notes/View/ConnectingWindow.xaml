@@ -1,0 +1,24 @@
+﻿<Window x:Class="Orange_Notes.View.ConnectingWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xamlSpinnersWPF="clr-namespace:xamlSpinnersWPF"
+        mc:Ignorable="d"
+        Title="Connecting" Width="100" Height="115" WindowStyle="None" Background="Transparent" AllowsTransparency="True" ShowInTaskbar="False">
+
+    <!--grid-->
+    <Grid>
+
+        <Border Grid.Row="0" CornerRadius="10,10,10,10" Background="#88ff8b3d">
+            <StackPanel Margin="10,10,10,10">
+
+                <xamlSpinnersWPF:ucSpinnerDotCircle/>
+                <TextBox Text="Connecting to Google Drive" HorizontalAlignment="Center" IsReadOnly="True" IsHitTestVisible="False" TextWrapping="Wrap" FontWeight="SemiBold" FontSize="14" Foreground="White" Background="Transparent" BorderThickness="0"/>
+
+            </StackPanel>
+        </Border>
+
+    </Grid>
+
+</Window>

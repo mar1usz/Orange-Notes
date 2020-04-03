@@ -3,14 +3,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:vm="clr-namespace:Orange_Notes.ViewModel"
         mc:Ignorable="d"
-        Title="Orange Notes" Width="400" Height="300" WindowStyle="None" Background="Transparent" AllowsTransparency="True" ResizeMode="CanResizeWithGrip" ShowInTaskbar="False">
-
-    <!-- converter -->
-    <Window.Resources>
-        <vm:NoteTitleConverter x:Key="noteTitleConverter"/>
-    </Window.Resources>
+        Title="Settings" Width="400" Height="300" WindowStyle="None" Background="Transparent" AllowsTransparency="True" ShowInTaskbar="False">
 
     <!--grid-->
     <Grid ShowGridLines="False">
@@ -29,7 +23,7 @@
                     <ColumnDefinition Width="22"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBox Grid.Column="0" Text="#Settings" IsReadOnly="True" IsHitTestVisible="False" TextWrapping="Wrap" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="14" Foreground="White" Background="Transparent" BorderThickness="0" Margin="10,0,0,0"/>
+                <TextBox Grid.Column="0" Text="Settings" IsReadOnly="True" IsHitTestVisible="False" TextWrapping="Wrap" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="14" Foreground="White" Background="Transparent" BorderThickness="0" Margin="10,0,0,0"/>
 
                 <Button Grid.Column="1" Name="closeBtn" Style="{DynamicResource MenuButtons}" Click="CloseButton_Click" Background="Transparent" BorderThickness="0" Margin="0,0,5,0">
                     <Path Data="M256,48C141.31,48,48,141.31,48,256s93.31,208,208,208,208-93.31,208-208S370.69,48,256,48Zm75.31,260.69a16,16,0,1,1-22.62,22.62L256,278.63l-52.69,52.68a16,16,0,0,1-22.62-22.62L233.37,256l-52.68-52.69a16,16,0,0,1,22.62-22.62L256,233.37l52.69-52.68a16,16,0,0,1,22.62,22.62L278.63,256Z" Fill="{Binding ElementName=closeBtn, Path=Foreground}" Stretch="Uniform"/>
@@ -47,8 +41,9 @@
                 </Grid.ColumnDefinitions>
 
                 <StackPanel Grid.Column="0" Margin="10,10,10,10">
+                    
                     <CheckBox x:Name="startupCheckbox" Click="StartupCheckBox_Click">
-                        <TextBox Text="Run on startup" IsReadOnly="True" IsHitTestVisible="False" TextWrapping="Wrap" FontSize="14" Foreground="White" Background="Transparent" BorderThickness="0"/>
+                        <TextBox Text="Run at startup" IsReadOnly="True" IsHitTestVisible="False" TextWrapping="Wrap" FontSize="14" Foreground="White" Background="Transparent" BorderThickness="0"/>
                     </CheckBox>
                     
                     <Separator Background="#88ffffff"/>
@@ -60,6 +55,7 @@
                     <CheckBox x:Name="googleDriveCheckbox" Click="GoogleDriveCheckBox_Click">
                         <TextBox Text="Store notes on Google Drive" IsReadOnly="True" IsHitTestVisible="False" TextWrapping="Wrap" FontSize="14" Foreground="White" Background="Transparent" BorderThickness="0"/>
                     </CheckBox>
+                    
                 </StackPanel>
                 
             </Grid>
