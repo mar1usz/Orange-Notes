@@ -7,6 +7,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using System;
 
 namespace Orange_Notes.Model
 {
@@ -16,9 +17,6 @@ namespace Orange_Notes.Model
 
         public static void Authorize(string credentialsFilePath)
         {
-            if (!System.IO.File.Exists(credentialsFilePath))
-                throw new FileNotFoundException(null, credentialsFilePath);
-
             string[] Scopes = { DriveService.Scope.DriveFile };
             string ApplicationName = "Orange Notes";
             UserCredential credential;
@@ -39,6 +37,7 @@ namespace Orange_Notes.Model
                 HttpClientInitializer = credential,
                 ApplicationName = ApplicationName,
             });
+            service.HttpClient.Timeout = TimeSpan.FromSeconds(120);
         }
 
         public static void UploadFile(T objToUpload, string fileName)
@@ -75,13 +74,13 @@ namespace Orange_Notes.Model
             }
         }
 
-        public static void DownloadFile(ref T objToDownload, string fileName)
+        public static T DownloadFile(string fileName)
         {
             string driveFileId = GetDriveFileId(fileName);
 
             if (driveFileId == null)
             {
-                objToDownload = new T();
+                return new T();
             }
             else
             {
@@ -94,7 +93,7 @@ namespace Orange_Notes.Model
 
                     stream.Position = 0;
                     StreamReader streamR = new StreamReader(stream);
-                    objToDownload = JsonSerializer.Deserialize<T>(streamR.ReadToEnd());
+                    return JsonSerializer.Deserialize<T>(streamR.ReadToEnd());
                 }
             }
         }
@@ -109,7 +108,6 @@ namespace Orange_Notes.Model
                 if (f.Name == fileName)
                     return f.Id;
             }
-
             return null;
         }
     }

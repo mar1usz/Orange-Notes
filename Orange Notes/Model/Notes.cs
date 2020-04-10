@@ -105,7 +105,7 @@ namespace Orange_Notes.Model
 
         public void JsonDeserialize(string filePath)
         {
-            JsonSerializer2<List<Note>>.Deserialize(ref notes, filePath);
+            notes = JsonSerializer2<List<Note>>.Deserialize(filePath);
         }
 
         public void GoogleDriveUpload(string fileName, string credentialsFilePath)
@@ -117,7 +117,7 @@ namespace Orange_Notes.Model
         public void GoogleDriveDownload(string fileName, string credentialsFilePath)
         {
             GoogleDrive<List<Note>>.Authorize(credentialsFilePath);
-            GoogleDrive<List<Note>>.DownloadFile(ref notes, fileName);
+            notes = GoogleDrive<List<Note>>.DownloadFile(fileName);
         }
     }
 
@@ -133,7 +133,7 @@ namespace Orange_Notes.Model
         public Note(int noteId)
         {
             this.noteId = noteId;
-            this.noteTitle = "Notka" + noteId;
+            this.noteTitle = "OrangeNote" + noteId;
             this.noteContent = "";
         }
     }

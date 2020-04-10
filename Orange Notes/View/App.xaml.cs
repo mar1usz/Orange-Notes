@@ -1,8 +1,10 @@
 ﻿using Orange_Notes.ViewModel;
 using System;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace Orange_Notes.View
 {
@@ -32,6 +34,7 @@ namespace Orange_Notes.View
         {
             NoteViewModel.LoadSettings();
             NoteViewModel.LoadNotes();
+
             if (NoteViewModel.noteIds.Count == 0)
             {
                 new NoteWindow().Show();
@@ -54,6 +57,22 @@ namespace Orange_Notes.View
         {
             NoteViewModel.SaveNotes();
             NoteViewModel.SaveSettings();
+        }
+
+        private void Application_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+        {
+            MessageBox.Show(e.Exception.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            Application_SaveExceptionDetailsToFile(DateTime.Now, e.Exception.Message, e.Exception.StackTrace);
+
+            Environment.Exit(1);
+        }
+
+        private void Application_SaveExceptionDetailsToFile(DateTime time, string exception_message, string exception_stackTrace)
+        {
+            string fileName = time.ToString("yyyy-MM-ddTHHmmss") + "@Exception.txt";
+            string content = exception_message + Environment.NewLine + exception_stackTrace;
+
+            File.WriteAllText(fileName, content);
         }
     }
 }

@@ -12,8 +12,8 @@ namespace Orange_Notes.ViewModel
 
     public class NoteViewModel : ViewModelBase
     {
-        private static Notes notes = new Notes();
-        public static Storage storage = Storage.Json;
+        public static Notes notes { get; set; } = new Notes();
+        public static Storage storage { get; set; } = Storage.Json;
 
         public static List<int> noteIds
         {
@@ -54,7 +54,7 @@ namespace Orange_Notes.ViewModel
 
         public static void LoadSettings()
         {
-            JsonSerializer2<Storage>.Deserialize(ref storage, "Orange Notes Settings.json");
+            storage = JsonSerializer2<Storage>.Deserialize("Orange Notes Settings.json");
         }
 
 

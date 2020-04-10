@@ -25,12 +25,6 @@ namespace Orange_Notes.View
             this.Close();
         }
 
-        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
-        {
-            base.OnMouseLeftButtonDown(e);
-            this.DragMove();
-        }
-
         private void StartupCheckBox_Click(object sender, RoutedEventArgs e)
         {
             using (RegistryKey regKey = Registry.CurrentUser.OpenSubKey(startupReg, true))
@@ -102,6 +96,12 @@ namespace Orange_Notes.View
             {
                 this.Close();
             }
+        }
+
+        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        {
+            base.OnMouseLeftButtonDown(e);
+            this.DragMove();
         }
     }
 }

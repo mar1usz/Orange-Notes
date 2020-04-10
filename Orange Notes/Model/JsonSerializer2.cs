@@ -14,16 +14,16 @@ namespace Orange_Notes.Model
             File.WriteAllText(filePath, jsonString);
         }
 
-        public static void Deserialize(ref T objToDeserialize, string filePath)
+        public static T Deserialize(string filePath)
         {
             if (File.Exists(filePath))
             {
                 string jsonString = File.ReadAllText(filePath);
-                objToDeserialize = JsonSerializer.Deserialize<T>(jsonString);
+                return JsonSerializer.Deserialize<T>(jsonString);
             }
             else
             {
-                objToDeserialize = new T();
+                return new T();
             }
         }
     }

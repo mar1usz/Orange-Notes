@@ -13,5 +13,5 @@ Sticky notes app in C# with Google Drive.
 - "credentials.json" file to authenticate you to Google Drive API as a developer (see: https://developers.google.com/drive/api/v3/)
 
 ## Credits:
-- Menu icons by https://ionicons.com/
-- Loading spinners by https://github.com/blackspike/Xaml-Spinners-WPF
+- Menu icons by https://ionicons.com/ (MIT license)
+- Loading spinners by https://github.com/blackspike/Xaml-Spinners-WPF (MIT license)
