@@ -4,7 +4,7 @@ using System.Windows.Data;
 
 namespace Orange_Notes__NUnit_
 {
-    public class NoteTitleConverterTest
+    public class NoteTitleConverterTests
     {
 
         [SetUp]
@@ -23,7 +23,7 @@ namespace Orange_Notes__NUnit_
         }
 
         [TestCase("", "")]
-        [TestCase("#Notka1", "Notka1")]
+        [TestCase("#Notka2", "Notka2")]
         public void ConvertBackTest(string in1, string out1)
         {
             IValueConverter c = new NoteTitleConverter();

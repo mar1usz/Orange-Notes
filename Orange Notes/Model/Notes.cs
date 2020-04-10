@@ -5,7 +5,7 @@ namespace Orange_Notes.Model
 {
     public class Notes
     {
-        private List<Note> notes;
+        private List<Note> notes = new List<Note>();
 
         public int AddNote()
         {
@@ -21,6 +21,21 @@ namespace Orange_Notes.Model
 
                 notes.Add(new Note(i));
                 return i;
+            }
+        }
+
+        public bool AddNote(int noteId)
+        {
+            int i = notes.FindIndex(n => n.noteId == noteId);
+
+            if (i == -1)
+            {
+                notes.Add(new Note(noteId));
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 
