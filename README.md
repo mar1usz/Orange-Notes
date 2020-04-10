@@ -1,4 +1,4 @@
-﻿﻿# Orange Notes
+﻿# Orange Notes
 Sticky notes app in C# with Google Drive.
 
 ## Features:
@@ -10,7 +10,7 @@ Sticky notes app in C# with Google Drive.
 ## Prerequisites:
 - Visual Studio 2019
 - .Net Core 3.0
-- [optional]"credentials.json" file to authenticate you to Google Drive API as a developer (see: https://developers.google.com/drive/api/v3/):
+- [optional]"credentials.json" to authenticate you to Google Drive API as a developer (see: https://developers.google.com/drive/api/v3/):
    ```
     {
       "installed": {
