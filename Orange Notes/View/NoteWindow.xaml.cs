@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Input;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace Orange_Notes.View
 {
@@ -36,13 +37,15 @@ namespace Orange_Notes.View
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
         {
             WindowCollection allWindows = Application.Current.Windows;
-            if (allWindows.OfType<SettingsWindow>().Count() < 1)
+            IEnumerable<SettingsWindow> settingsWindows = allWindows.OfType<SettingsWindow>();
+
+            if (settingsWindows.Count() < 1)
                 new SettingsWindow().Show();
         }
 
         public void CloseButton_Click(object sender, RoutedEventArgs e)
         {
-            Application.Current.Shutdown();
+            (Application.Current as App).Application_Save();
         }
 
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)

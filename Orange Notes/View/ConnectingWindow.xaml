@@ -14,8 +14,8 @@
             <StackPanel Margin="10,10,10,10">
 
                 <xamlSpinnersWPF:ucSpinnerDotCircle/>
-                
-                <TextBox Text="Connecting to Google Drive" HorizontalAlignment="Center" IsReadOnly="True" IsHitTestVisible="False" TextWrapping="Wrap" FontWeight="SemiBold" FontSize="14" Foreground="White" Background="Transparent" BorderThickness="0"/>
+
+                <TextBox Text="Connecting to Google Drive" TextAlignment="Center"  IsReadOnly="True" IsHitTestVisible="False" TextWrapping="Wrap" FontWeight="SemiBold" FontSize="14" Foreground="White" Background="Transparent" BorderThickness="0"/>
 
             </StackPanel>
         </Border>
