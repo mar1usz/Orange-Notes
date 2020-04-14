@@ -17,7 +17,7 @@ namespace Orange_Notes__NUnit_
             n.AddNote();
             n.AddNote();
             Assert.AreEqual(n.GetNoteIds().Count, 2);
-            Assert.AreEqual(n.GetNoteIds()[1], 2);
+            Assert.AreEqual(n.GetNoteIds()[1], "2");
         }
 
         [Test]
@@ -36,7 +36,7 @@ namespace Orange_Notes__NUnit_
         {
             Notes n = new Notes();
             n.AddNote();
-            int noteId = n.GetNoteIds()[0];
+            string noteId = n.GetNoteIds()[0];
 
             Assert.IsTrue(n.SetNoteTitle(noteId, "#TestNote1"));
             Assert.IsTrue(n.SetNoteContent(noteId, "Test note content 1"));
@@ -45,11 +45,11 @@ namespace Orange_Notes__NUnit_
             Assert.AreEqual(n.GetNoteContent(noteId), "Test note content 1");
 
 
-            Assert.IsFalse(n.SetNoteTitle(27, "#FakeNoteTitle"));
-            Assert.IsFalse(n.SetNoteContent(27, "Fake note content"));
+            Assert.IsFalse(n.SetNoteTitle("27", "#FakeNoteTitle"));
+            Assert.IsFalse(n.SetNoteContent("27", "Fake note content"));
 
-            Assert.IsNull(n.GetNoteTitle(27));
-            Assert.IsNull(n.GetNoteContent(27));
+            Assert.IsNull(n.GetNoteTitle("27"));
+            Assert.IsNull(n.GetNoteContent("27"));
         }
     }
 }
