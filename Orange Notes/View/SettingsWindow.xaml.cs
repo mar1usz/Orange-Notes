@@ -1,7 +1,10 @@
-﻿using Microsoft.Win32;
+﻿using IWshRuntimeLibrary;
 using Orange_Notes.ViewModel;
+using System;
+using System.IO;
 using System.Windows;
 using System.Windows.Input;
+using File = System.IO.File;
 
 namespace Orange_Notes.View
 {
@@ -11,8 +14,6 @@ namespace Orange_Notes.View
 
     public partial class SettingsWindow : Window
     {
-        private const string startupReg = "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run";
-
         public SettingsWindow()
         {
             InitializeComponent();
@@ -31,31 +32,31 @@ namespace Orange_Notes.View
 
         private void StartupCheckBox_Click(object sender, RoutedEventArgs e)
         {
-            using (RegistryKey regKey = Registry.CurrentUser.OpenSubKey(startupReg, true))
+            if (startupCheckbox.IsChecked == true)
             {
-                if (startupCheckbox.IsChecked == true)
-                {
-                    regKey.SetValue("Orange Notes", System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
-                }
-                else
-                {
-                    regKey.DeleteValue("Orange Notes", true);
-                }
+                WshShell shell = new WshShell();
+                string filepath = Environment.GetFolderPath(Environment.SpecialFolder.Startup) + "\\Orange Notes.lnk";
+                IWshShortcut shortcut = (IWshShortcut)shell.CreateShortcut(filepath);
+                shortcut.WorkingDirectory = Directory.GetCurrentDirectory();
+                shortcut.TargetPath = System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName;
+                shortcut.Save();
+            }
+            else
+            {
+                string filePath = Environment.GetFolderPath(Environment.SpecialFolder.Startup) + "\\Orange Notes.lnk";
+                File.Delete(filePath);
             }
         }
 
         private void StartupCheckBox_Refresh()
         {
-            using (RegistryKey regKey = Registry.CurrentUser.OpenSubKey(startupReg, true))
+            if (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.Startup) + "\\Orange Notes.lnk"))
             {
-                if (regKey.GetValue("Orange Notes") == null)
-                {
-                    startupCheckbox.IsChecked = false;
-                }
-                else
-                {
-                    startupCheckbox.IsChecked = true;
-                }
+                startupCheckbox.IsChecked = true;
+            }
+            else
+            {
+                startupCheckbox.IsChecked = false;
             }
         }
 
@@ -96,7 +97,7 @@ namespace Orange_Notes.View
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-            if(e.Key == Key.Escape)
+            if (e.Key == Key.Escape)
             {
                 this.Close();
             }
