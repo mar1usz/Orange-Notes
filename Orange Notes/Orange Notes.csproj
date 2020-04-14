@@ -9,7 +9,8 @@
     <Version>0.9.0</Version>
     <Authors>mar1usz</Authors>
     <Company>mar1usz</Company>
-    <Description>© mar1usz. All rights reserved.</Description>
+    <Description></Description>
+    <Copyright>© mar1usz. All rights reserved.</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
