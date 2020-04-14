@@ -9,7 +9,7 @@
 - Run at startup (optional)
 - Doesn't take any space in your taskbar
 
-## Build prerequisites:
+## Prerequisites:
 - Visual Studio 2019
 - .Net Core 3.0
 
