@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Orange_Notes.Model
@@ -7,24 +8,25 @@ namespace Orange_Notes.Model
     {
         private List<Note> notes = new List<Note>();
 
-        public int AddNote()
+        public string AddNote()
         {
             if (!notes.Any())
             {
-                notes.Add(new Note(1));
-                return 1;
+                notes.Add(new Note("1"));
+                return "1";
             }
             else
             {
-                int i = notes.Max(n => n.noteId);
-                i++;
+                int i_ = notes.Max(n => Int32.Parse(n.noteId));
+                i_++;
 
+                string i = i_.ToString();
                 notes.Add(new Note(i));
                 return i;
             }
         }
 
-        public bool AddNote(int noteId)
+        public bool AddNote(string noteId)
         {
             int i = notes.FindIndex(n => n.noteId == noteId);
 
@@ -39,7 +41,7 @@ namespace Orange_Notes.Model
             }
         }
 
-        public bool RemoveNote(int noteId)
+        public bool RemoveNote(string noteId)
         {
             int i = notes.FindIndex(n => n.noteId == noteId);
 
@@ -54,7 +56,7 @@ namespace Orange_Notes.Model
             }
         }
 
-        public string GetNoteTitle(int noteId)
+        public string GetNoteTitle(string noteId)
         {
             int i = notes.FindIndex(n => n.noteId == noteId);
 
@@ -64,7 +66,7 @@ namespace Orange_Notes.Model
                 return null;
         }
 
-        public string GetNoteContent(int noteId)
+        public string GetNoteContent(string noteId)
         {
             int i = notes.FindIndex(n => n.noteId == noteId);
 
@@ -74,7 +76,7 @@ namespace Orange_Notes.Model
                 return null;
         }
 
-        public bool SetNoteTitle(int noteId, string noteTitle)
+        public bool SetNoteTitle(string noteId, string noteTitle)
         {
             int i = notes.FindIndex(n => n.noteId == noteId);
 
@@ -89,7 +91,7 @@ namespace Orange_Notes.Model
             }
         }
 
-        public bool SetNoteContent(int noteId, string noteContent)
+        public bool SetNoteContent(string noteId, string noteContent)
         {
             int i = notes.FindIndex(n => n.noteId == noteId);
 
@@ -104,9 +106,9 @@ namespace Orange_Notes.Model
             }            
         }
 
-        public List<int> GetNoteIds()
+        public List<string> GetNoteIds()
         {
-            List<int> ids = new List<int>();
+            List<string> ids = new List<string>();
             foreach (Note n in notes)
                 ids.Add(n.noteId);
 
@@ -138,14 +140,14 @@ namespace Orange_Notes.Model
 
     public class Note
     {
-        public int noteId { get; set; }
+        public string noteId { get; set; }
         public string noteTitle { get; set; }
         public string noteContent { get; set; }
 
         public Note()
         { }
 
-        public Note(int noteId)
+        public Note(string noteId)
         {
             this.noteId = noteId;
             this.noteTitle = "OrangeNote" + noteId;

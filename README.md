@@ -12,7 +12,7 @@
 ## Prerequisites:
 - Visual Studio 2019
 - .Net Core 3.0
-- [optional] "credentials.json" file to authenticate you to Google Drive API as a developer (see https://developers.google.com/drive/api/v3/):
+- [optional] "credentials.json" file to authenticate you to Google Drive API as a developer (see: https://developers.google.com/drive/api/v3/):
    ```
     {
       "installed": {
@@ -23,5 +23,5 @@
    ```
 
 ## Credits:
-- Menu icons by https://ionicons.com/ (MIT licensed)
-- Loading spinners by https://github.com/blackspike/Xaml-Spinners-WPF (MIT licensed)
+- Menu icons by https://ionicons.com/ (MIT license)
+- Loading spinners by https://github.com/blackspike/Xaml-Spinners-WPF (MIT license)

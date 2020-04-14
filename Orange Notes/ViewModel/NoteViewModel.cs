@@ -15,7 +15,7 @@ namespace Orange_Notes.ViewModel
         public static Storage storage { get; set; } = Storage.Json;
         private static Notes notes = new Notes();
 
-        public static List<int> noteIds
+        public static List<string> noteIds
         {
             get
             {
@@ -58,7 +58,7 @@ namespace Orange_Notes.ViewModel
         }
 
 
-        public int noteId { get; }
+        public string noteId { get; }
 
         public string noteTitle
         {
@@ -88,7 +88,7 @@ namespace Orange_Notes.ViewModel
 
         public ICommand removeNote { get; }
 
-        public NoteViewModel(int noteId)
+        public NoteViewModel(string noteId)
         {
             this.noteId = noteId;
             this.removeNote = new RelayCommand(parameter => notes.RemoveNote(noteId));

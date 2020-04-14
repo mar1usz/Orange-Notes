@@ -1,8 +1,6 @@
 ﻿using Orange_Notes.ViewModel;
 using System.Windows;
 using System.Windows.Input;
-using System.Linq;
-using System.Collections.Generic;
 
 namespace Orange_Notes.View
 {
@@ -12,21 +10,37 @@ namespace Orange_Notes.View
 
     public partial class NoteWindow : Window
     {
+        public string noteId {
+            get
+            {
+                NoteViewModel vm = DataContext as NoteViewModel;
+                return vm.noteId;
+            }
+        }
+
+        public NoteWindow(string noteId)
+        {
+            InitializeComponent();
+            DataContext = new NoteViewModel(noteId);
+        }
+
         public NoteWindow()
         {
             InitializeComponent();
-            this.DataContext = new NoteViewModel();
-        }
-
-        public NoteWindow(int noteId)
-        {
-            InitializeComponent();
-            this.DataContext = new NoteViewModel(noteId);
+            DataContext = new NoteViewModel();
         }
 
         private void RemoveButton_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            int noteWindowsCount = Application.Current.CountWindowsOfType<NoteWindow>();
+            if (noteWindowsCount == 1)
+            {
+                CloseButton_Click(sender, e);
+            }
+            else
+            {
+                Close();
+            }
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
@@ -36,22 +50,20 @@ namespace Orange_Notes.View
 
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
         {
-            WindowCollection allWindows = Application.Current.Windows;
-            IEnumerable<SettingsWindow> settingsWindows = allWindows.OfType<SettingsWindow>();
-
-            if (settingsWindows.Count() < 1)
+            bool settingsWindowExists = Application.Current.WindowOfTypeExists<SettingsWindow>();
+            if (!settingsWindowExists)
                 new SettingsWindow().Show();
         }
 
-        public void CloseButton_Click(object sender, RoutedEventArgs e)
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
-            (Application.Current as App).Application_Save();
+            (Application.Current as App).Application_Exit();
         }
 
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
             base.OnMouseLeftButtonDown(e);
-            this.DragMove();
+            DragMove();
         }
     }
 }

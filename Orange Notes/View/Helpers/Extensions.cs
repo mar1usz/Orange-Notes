@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Linq;
+using System.Windows;
 
 namespace Orange_Notes.View
 {
@@ -10,6 +11,52 @@ namespace Orange_Notes.View
             w.Top = bounds.Top;
             w.Width = bounds.Width;
             w.Height = bounds.Height;
+        }
+
+        public static void CloseWindowsOfType<windowType>(this Application a) where windowType : Window
+        {
+            WindowCollection allWindows = a.Windows;
+            windowType[] windowTypeWindows = allWindows.OfType<windowType>().ToArray();
+
+            foreach (windowType w in windowTypeWindows)
+            {
+                w.Close();
+            }
+        }
+
+        public static void HideWindowsOfType<windowType>(this Application a) where windowType : Window
+        {
+            WindowCollection allWindows = a.Windows;
+            windowType[] windowTypeWindows = allWindows.OfType<windowType>().ToArray();
+
+            foreach (windowType w in windowTypeWindows)
+            {
+                w.Hide();
+            }
+        }
+
+        public static int CountWindowsOfType<windowType>(this Application a) where windowType : Window
+        {
+            WindowCollection allWindows = a.Windows;
+            windowType[] windowTypeWindows = allWindows.OfType<windowType>().ToArray();
+
+            return windowTypeWindows.Count();
+        }
+
+        public static windowType[] GetWindowsOfType<windowType>(this Application a) where windowType : Window
+        {
+            WindowCollection allWindows = a.Windows;
+            windowType[] windowTypeWindows = allWindows.OfType<windowType>().ToArray();
+
+            return windowTypeWindows;
+        }
+
+        public static bool WindowOfTypeExists<windowType>(this Application a) where windowType : Window
+        {
+            WindowCollection allWindows = a.Windows;
+            windowType[] windowTypeWindows = allWindows.OfType<windowType>().ToArray();
+
+            return windowTypeWindows.Any() ? true : false;
         }
     }
 }

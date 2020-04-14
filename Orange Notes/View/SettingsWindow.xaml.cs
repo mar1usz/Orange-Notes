@@ -8,6 +8,7 @@ namespace Orange_Notes.View
     /// <summary>
     /// Interaction logic for SettingsWindow.xaml
     /// </summary>
+
     public partial class SettingsWindow : Window
     {
         private const string startupReg = "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run";
@@ -15,9 +16,12 @@ namespace Orange_Notes.View
         public SettingsWindow()
         {
             InitializeComponent();
+
             StartupCheckBox_Refresh();
             StorageCheckboxes_Refresh();
             this.KeyDown += Window_KeyDown;
+            this.Left = SystemParameters.WorkArea.Left + SystemParameters.WorkArea.Width / 2 - this.Width / 2;
+            this.Top = SystemParameters.WorkArea.Top + 10;
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
