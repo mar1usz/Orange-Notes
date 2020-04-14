@@ -12,15 +12,6 @@
 ## Build prerequisites:
 - Visual Studio 2019
 - .Net Core 3.0
-- [optional] "credentials.json" file to authenticate you to Google Drive API as a developer (see: https://developers.google.com/drive/api/v3/):
-   ```
-    {
-      "installed": {
-        "client_id": "xxxxxxxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.apps.googleusercontent.com",
-        "client_secret": "xxxxxxxxxxxxxxxxxxxxxxxx"
-      }
-    }
-   ```
 
 ## Credits:
 - Menu icons by https://ionicons.com/ (MIT license)
