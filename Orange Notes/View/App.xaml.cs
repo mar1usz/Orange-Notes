@@ -68,6 +68,9 @@ namespace Orange_Notes.View
 
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            if (e.Error != null)
+                throw e.Error;
+
             if (NoteViewModel.noteIds.Count == 0)
             {
                 NoteWindow n = new NoteWindow();
@@ -136,6 +139,9 @@ namespace Orange_Notes.View
 
         private void backgroundWorker2_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            if (e.Error != null)
+                throw e.Error;
+
             this.CloseWindowsOfType<ConnectingWindow>();
             Shutdown();
         }
