@@ -6,10 +6,9 @@
     <RootNamespace>Orange_Notes</RootNamespace>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>View\Helpers\icon.ico</ApplicationIcon>
-    <Version>0.9.0</Version>
+    <Version>0.9.0.0</Version>
     <Authors>mar1usz</Authors>
     <Company>mar1usz</Company>
-    <Description></Description>
     <Copyright>© mar1usz. All rights reserved.</Copyright>
   </PropertyGroup>
 
