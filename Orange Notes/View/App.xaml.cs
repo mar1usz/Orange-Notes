@@ -23,8 +23,8 @@ namespace Orange_Notes.View
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             Application_CheckIfUnique();
-            Application_LoadSettings();
-            Application_LoadNotes();
+            Application_LoadSettingsSync();
+            Application_LoadNotesAndOpenWindowsAsync();
         }
 
         private void Application_CheckIfUnique()
@@ -38,13 +38,13 @@ namespace Orange_Notes.View
             }
         }
 
-        private void Application_LoadSettings()
+        private void Application_LoadSettingsSync()
         {
             NoteViewModel.LoadSettings();
             restoreBounds = JsonSerializer2<Dictionary<string, Rect>>.Deserialize("Orange Notes Restore Bounds.json");
         }
 
-        private void Application_LoadNotes()
+        private void Application_LoadNotesAndOpenWindowsAsync()
         {
             BackgroundWorker backgroundWorker1 = new BackgroundWorker();
             backgroundWorker1.DoWork += backgroundWorker1_DoWork;
@@ -96,12 +96,17 @@ namespace Orange_Notes.View
         #region Application_Exit
         public void Application_Exit()
         {
-            this.HideWindowsOfType<Window>();
-            Application_SaveSettings();
-            Application_SaveNotes();
+            Application_HideAllWindows();
+            Application_SaveSettingsSync();
+            Application_SaveNotesAndShutdownAsync();
         }
 
-        private void Application_SaveSettings()
+        private void Application_HideAllWindows()
+        {
+            this.HideWindowsOfType<Window>();
+        }
+
+        private void Application_SaveSettingsSync()
         {
             NoteViewModel.SaveSettings();
 
@@ -115,7 +120,7 @@ namespace Orange_Notes.View
             JsonSerializer2<Dictionary<string, Rect>>.Serialize(restoreBounds, "Orange Notes Restore Bounds.json");
         }
 
-        private void Application_SaveNotes()
+        private void Application_SaveNotesAndShutdownAsync()
         {
                 BackgroundWorker backgroundWorker2 = new BackgroundWorker();
                 backgroundWorker2.DoWork += backgroundWorker2_DoWork;
@@ -145,15 +150,20 @@ namespace Orange_Notes.View
             this.CloseWindowsOfType<ConnectingWindow>();
             Shutdown();
         }
-        #endregion
 
-        #region Application_SessionEnding
         private void Application_SessionEnding(object sender, SessionEndingCancelEventArgs e)
         {
             e.Cancel = true;
-            Application_SaveSettings();
-            backgroundWorker2_DoWork(sender, null);
+
+            Application_SaveSettingsSync();
+            Application_SaveNotesSync();
+
             e.Cancel = false;
+        }
+
+        private void Application_SaveNotesSync()
+        {
+            NoteViewModel.SaveNotes();
         }
         #endregion
 
