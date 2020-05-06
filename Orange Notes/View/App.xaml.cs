@@ -117,11 +117,11 @@ namespace Orange_Notes.View
 
         private void Application_SaveNotes()
         {
-            BackgroundWorker backgroundWorker2 = new BackgroundWorker();
-            backgroundWorker2.DoWork += backgroundWorker2_DoWork;
-            backgroundWorker2.RunWorkerCompleted += backgroundWorker2_RunWorkerCompleted;
-            backgroundWorker2_BeforeWork();
-            backgroundWorker2.RunWorkerAsync();
+                BackgroundWorker backgroundWorker2 = new BackgroundWorker();
+                backgroundWorker2.DoWork += backgroundWorker2_DoWork;
+                backgroundWorker2.RunWorkerCompleted += backgroundWorker2_RunWorkerCompleted;
+                backgroundWorker2_BeforeWork();
+                backgroundWorker2.RunWorkerAsync();
         }
 
         private void backgroundWorker2_BeforeWork()
@@ -144,6 +144,16 @@ namespace Orange_Notes.View
 
             this.CloseWindowsOfType<ConnectingWindow>();
             Shutdown();
+        }
+        #endregion
+
+        #region Application_SessionEnding
+        private void Application_SessionEnding(object sender, SessionEndingCancelEventArgs e)
+        {
+            e.Cancel = true;
+            NoteViewModel.SaveSettings();
+            NoteViewModel.SaveNotes();
+            e.Cancel = false;
         }
         #endregion
 
