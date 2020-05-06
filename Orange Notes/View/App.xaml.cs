@@ -151,8 +151,8 @@ namespace Orange_Notes.View
         private void Application_SessionEnding(object sender, SessionEndingCancelEventArgs e)
         {
             e.Cancel = true;
-            NoteViewModel.SaveSettings();
-            NoteViewModel.SaveNotes();
+            Application_SaveSettings();
+            backgroundWorker2_DoWork(sender, null);
             e.Cancel = false;
         }
         #endregion
