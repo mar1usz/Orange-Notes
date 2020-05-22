@@ -155,7 +155,6 @@ namespace Orange_Notes.View
         {
             e.Cancel = true;
 
-            Application_HideAllWindows();
             Application_SaveSettingsSync();
             Application_SaveNotesSync();
 
