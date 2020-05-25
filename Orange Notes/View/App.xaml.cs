@@ -178,7 +178,7 @@ namespace Orange_Notes.View
 
         private void Application_SaveExceptionDetailsToFile(DateTime time, string exception_message, string exception_stackTrace)
         {
-            string fileName = time.ToString("yyyy-MM-ddTHHmmss") + "@Exception.txt";
+            string fileName = time.ToString("yyyy-MM-ddTHHmmss") + "-Exception.txt";
             string content = exception_message + Environment.NewLine + exception_stackTrace;
 
             File.WriteAllText(fileName, content);
