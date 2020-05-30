@@ -10,8 +10,8 @@ Sticky notes in C# with Google Drive:
 - Doesn't take any space in your taskbar
 
 ## Prerequisites:
-- Visual Studio 2019
 - .NET Core 3.0
+- Visual Studio 2019
 - [optional] "credentials.json" file to authenticate you to Google Drive API as a developer (see: https://developers.google.com/drive/api/v3/):
    ```
     {
