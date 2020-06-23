@@ -88,7 +88,6 @@ namespace Orange_Notes.View
                     n.Show();
                 }
             }
-
             this.CloseWindowsOfType<ConnectingWindow>();
         }
         #endregion
@@ -109,24 +108,22 @@ namespace Orange_Notes.View
         private void Application_SaveSettingsSync()
         {
             NoteViewModel.SaveSettings();
-
             NoteWindow[] noteWindows = this.GetWindowsOfType<NoteWindow>();
             restoreBounds.Clear();
             foreach (NoteWindow w in noteWindows)
             {
                 restoreBounds.Add(w.noteId, w.RestoreBounds);
             }
-
             JsonSerializer2<Dictionary<string, Rect>>.Serialize(restoreBounds, "Orange Notes Restore Bounds.json");
         }
 
         private void Application_SaveNotesAndShutdownAsync()
         {
-                BackgroundWorker backgroundWorker2 = new BackgroundWorker();
-                backgroundWorker2.DoWork += backgroundWorker2_DoWork;
-                backgroundWorker2.RunWorkerCompleted += backgroundWorker2_RunWorkerCompleted;
-                backgroundWorker2_BeforeWork();
-                backgroundWorker2.RunWorkerAsync();
+            BackgroundWorker backgroundWorker2 = new BackgroundWorker();
+            backgroundWorker2.DoWork += backgroundWorker2_DoWork;
+            backgroundWorker2.RunWorkerCompleted += backgroundWorker2_RunWorkerCompleted;
+            backgroundWorker2_BeforeWork();
+            backgroundWorker2.RunWorkerAsync();
         }
 
         private void backgroundWorker2_BeforeWork()
@@ -154,10 +151,8 @@ namespace Orange_Notes.View
         private void Application_SessionEnding(object sender, SessionEndingCancelEventArgs e)
         {
             e.Cancel = true;
-
             Application_SaveSettingsSync();
             Application_SaveNotesSync();
-
             e.Cancel = false;
         }
 
@@ -172,7 +167,6 @@ namespace Orange_Notes.View
         {
             MessageBox.Show(e.Exception.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             Application_SaveExceptionDetailsToFile(DateTime.Now, e.Exception.Message, e.Exception.StackTrace);
-
             Environment.Exit(1);
         }
 
@@ -180,7 +174,6 @@ namespace Orange_Notes.View
         {
             string fileName = time.ToString("yyyy-MM-ddTHHmmss") + "-Exception.txt";
             string content = exception_message + Environment.NewLine + exception_stackTrace;
-
             File.WriteAllText(fileName, content);
         }
         #endregion

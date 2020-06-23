@@ -92,8 +92,8 @@ namespace Orange_Notes.Model
                     request.DownloadWithStatus(stream);
 
                     stream.Position = 0;
-                    StreamReader streamR = new StreamReader(stream);
-                    return JsonSerializer.Deserialize<T>(streamR.ReadToEnd());
+                    StreamReader reader = new StreamReader(stream);
+                    return JsonSerializer.Deserialize<T>(reader.ReadToEnd());
                 }
             }
         }

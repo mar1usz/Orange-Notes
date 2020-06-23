@@ -12,7 +12,6 @@ namespace Orange_Notes.View
         public ConnectingWindow()
         {
             InitializeComponent();
-
             this.Left = SystemParameters.WorkArea.Right - 10 - this.Width;
             this.Top = SystemParameters.WorkArea.Top + 10;
         }

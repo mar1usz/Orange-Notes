@@ -6,94 +6,53 @@
              DispatcherUnhandledException="Application_DispatcherUnhandledException">
 
     <Application.Resources>
-
+        <!--menu buttons-->
         <Style x:Key="MenuButtons" TargetType="Button">
-
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-
                         <ContentPresenter Content="{TemplateBinding Content}"/>
-
                         <ControlTemplate.Triggers>
-                            
-                            <Trigger Property="IsMouseOver" Value="False">
-                                <Setter Property="Foreground" Value="#fc9456"/>
-                            </Trigger>
-
-
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Foreground" Value="#ffb385"/>
-                            </Trigger>
-
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter Property="Foreground" Value="#fff0e6"/>
-                            </Trigger>
-
+                            <Trigger Property="IsMouseOver" Value="False"><Setter Property="Foreground" Value="#fc9456"/></Trigger>
+                            <Trigger Property="IsMouseOver" Value="True"><Setter Property="Foreground" Value="#ffb385"/></Trigger>
+                            <Trigger Property="IsPressed" Value="True"><Setter Property="Foreground" Value="#fff0e6"/></Trigger>
                         </ControlTemplate.Triggers>
-
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-
         </Style>
 
+        <!--apple scrollbar-->
         <Style x:Key="AppleScrollbar" TargetType="ScrollBar">
-
             <Setter Property="MinWidth" Value="4"/>
             <Setter Property="Width" Value="4"/>
-
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="ScrollBar">
-
                         <Track x:Name="PART_Track" IsDirectionReversed="True">
-
-                            <Track.Thumb>
-                                <Thumb Style="{DynamicResource AppleThumb}"/>
-                            </Track.Thumb>
-
+                            <Track.Thumb><Thumb Style="{DynamicResource AppleThumb}"/></Track.Thumb>
                         </Track>
-
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-
         </Style>
 
         <Style x:Key="AppleThumb" TargetType="Thumb">
-
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Thumb">
-
                         <Grid>
                             <Rectangle Fill="Transparent"/>
                             <Border CornerRadius="{Binding ActualWidth, RelativeSource={RelativeSource Self}}" Background="{TemplateBinding Background}"/>
                         </Grid>
-
                         <ControlTemplate.Triggers>
-
-                            <Trigger Property="IsMouseOver" Value="False">
-                                <Setter Property="Background" Value="#88ffa568"/>
-                            </Trigger>
-
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="#88ffbf93"/>
-                            </Trigger>
-
-                            <Trigger Property="IsDragging" Value="True">
-                                <Setter Property="Background" Value="#88fff2e9"/>
-                            </Trigger>
-
+                            <Trigger Property="IsMouseOver" Value="False"><Setter Property="Background" Value="#88ffa568"/></Trigger>
+                            <Trigger Property="IsMouseOver" Value="True"><Setter Property="Background" Value="#88ffbf93"/></Trigger>
+                            <Trigger Property="IsDragging" Value="True"><Setter Property="Background" Value="#88fff2e9"/></Trigger>
                         </ControlTemplate.Triggers>
-
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-
         </Style>
-
     </Application.Resources>
-
 </Application>

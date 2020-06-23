@@ -8,59 +8,36 @@
 
     <!--grid-->
     <Grid ShowGridLines="False">
-
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!--grid row 0-->
         <Border Grid.Row="0" CornerRadius="10,10,0,0" Background="#f27522">
             <Grid Grid.Row="0">
-
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="22"/>
                 </Grid.ColumnDefinitions>
-
                 <TextBox Grid.Column="0" Text="Settings" IsReadOnly="True" IsHitTestVisible="False" TextWrapping="Wrap" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="14" Foreground="White" Background="Transparent" BorderThickness="0" Margin="10,0,0,0"/>
-
                 <Button Grid.Column="1" Name="closeBtn" Style="{DynamicResource MenuButtons}" Click="CloseButton_Click" Background="Transparent" BorderThickness="0" Margin="0,0,5,0">
                     <Path Data="M256,48C141.31,48,48,141.31,48,256s93.31,208,208,208,208-93.31,208-208S370.69,48,256,48Zm75.31,260.69a16,16,0,1,1-22.62,22.62L256,278.63l-52.69,52.68a16,16,0,0,1-22.62-22.62L233.37,256l-52.68-52.69a16,16,0,0,1,22.62-22.62L256,233.37l52.69-52.68a16,16,0,0,1,22.62,22.62L278.63,256Z" Fill="{Binding ElementName=closeBtn, Path=Foreground}" Stretch="Uniform"/>
                 </Button>
-
             </Grid>
         </Border>
 
-        <!--grid row 1-->
         <Border Grid.Row="1" CornerRadius="0,0,10,10" Background="#88ff8b3d">
             <Grid>
-
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-
                 <StackPanel Grid.Column="0" Margin="10,10,10,10">
-                    
-                    <CheckBox x:Name="startupCheckbox" Click="StartupCheckBox_Click">
-                        <TextBox Text="Run at startup" IsReadOnly="True" IsHitTestVisible="False" TextWrapping="Wrap" FontSize="14" Foreground="White" Background="Transparent" BorderThickness="0"/>
-                    </CheckBox>
-                    
+                    <CheckBox x:Name="startupCheckbox" Click="StartupCheckBox_Click"><TextBox Text="Run at startup" IsReadOnly="True" IsHitTestVisible="False" TextWrapping="Wrap" FontSize="14" Foreground="White" Background="Transparent" BorderThickness="0"/></CheckBox>
                     <Separator Background="#88ffffff"/>
-                    
-                    <CheckBox x:Name="jsonCheckbox" Click="JsonCheckBox_Click">
-                        <TextBox Text="Store notes locally" IsReadOnly="True" IsHitTestVisible="False" TextWrapping="Wrap" FontSize="14" Foreground="White" Background="Transparent" BorderThickness="0"/>
-                    </CheckBox>
-
-                    <CheckBox x:Name="googleDriveCheckbox" Click="GoogleDriveCheckBox_Click">
-                        <TextBox Text="Store notes on Google Drive" IsReadOnly="True" IsHitTestVisible="False" TextWrapping="Wrap" FontSize="14" Foreground="White" Background="Transparent" BorderThickness="0"/>
-                    </CheckBox>
-                    
+                    <CheckBox x:Name="jsonCheckbox" Click="JsonCheckBox_Click"><TextBox Text="Store notes locally" IsReadOnly="True" IsHitTestVisible="False" TextWrapping="Wrap" FontSize="14" Foreground="White" Background="Transparent" BorderThickness="0"/></CheckBox>
+                    <CheckBox x:Name="googleDriveCheckbox" Click="GoogleDriveCheckBox_Click"><TextBox Text="Store notes on Google Drive" IsReadOnly="True" IsHitTestVisible="False" TextWrapping="Wrap" FontSize="14" Foreground="White" Background="Transparent" BorderThickness="0"/></CheckBox>   
                 </StackPanel>
-                
             </Grid>
         </Border>
-
     </Grid>
-
 </Window>

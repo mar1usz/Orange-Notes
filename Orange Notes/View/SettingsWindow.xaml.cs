@@ -17,7 +17,6 @@ namespace Orange_Notes.View
         public SettingsWindow()
         {
             InitializeComponent();
-
             StartupCheckBox_Refresh();
             StorageCheckboxes_Refresh();
             this.KeyDown += Window_KeyDown;
@@ -27,7 +26,7 @@ namespace Orange_Notes.View
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private void StartupCheckBox_Click(object sender, RoutedEventArgs e)
@@ -50,7 +49,8 @@ namespace Orange_Notes.View
 
         private void StartupCheckBox_Refresh()
         {
-            if (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.Startup) + "\\Orange Notes.lnk"))
+            string filePath = Environment.GetFolderPath(Environment.SpecialFolder.Startup) + "\\Orange Notes.lnk";
+            if (File.Exists(filePath))
             {
                 startupCheckbox.IsChecked = true;
             }
@@ -66,7 +66,6 @@ namespace Orange_Notes.View
             {
                 NoteViewModel.storage = Storage.Json;
             }
-
             StorageCheckboxes_Refresh();
         }
 
@@ -76,7 +75,6 @@ namespace Orange_Notes.View
             {
                 NoteViewModel.storage = Storage.GoogleDrive;
             }
-
             StorageCheckboxes_Refresh();
         }
 
@@ -84,7 +82,6 @@ namespace Orange_Notes.View
         {
             jsonCheckbox.IsChecked = false;
             googleDriveCheckbox.IsChecked = false;
-
             if (NoteViewModel.storage == Storage.Json)
             {
                 jsonCheckbox.IsChecked = true;
@@ -99,7 +96,7 @@ namespace Orange_Notes.View
         {
             if (e.Key == Key.Escape)
             {
-                this.Close();
+                Close();
             }
         }
 

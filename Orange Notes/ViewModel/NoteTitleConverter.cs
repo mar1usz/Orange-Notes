@@ -9,19 +9,33 @@ namespace Orange_Notes.ViewModel
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             string s = value as string;
-            if (s.Length > 0)
-                s = "#" + s;
+            if(s != null)
+            {
+                if (s.Length > 0)
+                    s = "#" + s;
 
-            return s;
+                return s;
+            }
+            else
+            {
+                return value;
+            }
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             string s = value as string;
-            if (s.StartsWith("#"))
-                s = s.Remove(0, 1);
+            if (s != null)
+            {
+                if (s.StartsWith("#"))
+                    s = s.Remove(0, 1);
 
-            return s;
+                return s;
+            }
+            else
+            {
+                return value;
+            }
         }
     }
 }

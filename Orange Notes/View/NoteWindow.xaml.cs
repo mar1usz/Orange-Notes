@@ -14,7 +14,14 @@ namespace Orange_Notes.View
             get
             {
                 NoteViewModel vm = DataContext as NoteViewModel;
-                return vm.noteId;
+                if (vm != null)
+                {
+                    return vm.noteId;
+                }
+                else
+                {
+                    return null;
+                }
             }
         }
 
@@ -32,8 +39,7 @@ namespace Orange_Notes.View
 
         private void RemoveButton_Click(object sender, RoutedEventArgs e)
         {
-            int noteWindowsCount = Application.Current.CountWindowsOfType<NoteWindow>();
-            if (noteWindowsCount == 1)
+            if (Application.Current.CountWindowsOfType<NoteWindow>() == 1)
             {
                 CloseButton_Click(sender, e);
             }
@@ -50,14 +56,17 @@ namespace Orange_Notes.View
 
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
         {
-            bool settingsWindowExists = Application.Current.WindowOfTypeExists<SettingsWindow>();
-            if (!settingsWindowExists)
+            if (!Application.Current.WindowOfTypeExists<SettingsWindow>())
                 new SettingsWindow().Show();
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
-            (Application.Current as App).Application_Exit();
+            App app = Application.Current as App;
+            if(app != null)
+            {
+                app.Application_Exit();
+            }
         }
 
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)

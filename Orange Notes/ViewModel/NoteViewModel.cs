@@ -23,27 +23,29 @@ namespace Orange_Notes.ViewModel
             }
         }
 
-    public static void SaveNotes()
+        public static void SaveNotes()
         {
-            if (storage == Storage.Json)
+            switch (storage)
             {
-                notes.JsonSerialize("Orange Notes.json");
-            }
-            else if (storage == Storage.GoogleDrive)
-            {
-                notes.GoogleDriveUpload("Orange Notes.json", "credentials.json");
+                case Storage.Json:
+                    notes.JsonSerialize("Orange Notes.json");
+                    break;
+                case Storage.GoogleDrive:
+                    notes.GoogleDriveUpload("Orange Notes.json", "credentials.json");
+                    break;
             }
         }
-            
+
         public static void LoadNotes()
         {
-            if (storage == Storage.Json)
+            switch (storage)
             {
-                notes.JsonDeserialize("Orange Notes.json");
-            }
-            else if (storage == Storage.GoogleDrive)
-            {
-                notes.GoogleDriveDownload("Orange Notes.json", "credentials.json");
+                case Storage.Json:
+                    notes.JsonDeserialize("Orange Notes.json");
+                    break;
+                case Storage.GoogleDrive:
+                    notes.GoogleDriveDownload("Orange Notes.json", "credentials.json");
+                    break;
             }
         }
 
