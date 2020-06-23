@@ -12,7 +12,7 @@ Sticky notes in C# with Google Drive:
 ## Prerequisites:
 - .NET Core 3.1
 - Visual Studio 2019
-- (optional) "credentials.json" file to authenticate you to Google Drive API as a developer (see: https://developers.google.com/drive/api/v3/):
+- (optional) "credentials.json" file to identify your application to Google (see: https://developers.google.com/drive/api/v3/about-auth):
    ```
     {
       "installed": {
