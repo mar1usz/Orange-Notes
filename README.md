@@ -7,7 +7,7 @@ Sticky notes in C# with Google Drive:
 - Save notes on your desktop
 - Store notes in .json file either locally or on Google Drive
 - Run at startup (optional)
-- Doesn't take any space in your taskbar
+- Doesn't take up any space on your taskbar
 
 ## Prerequisites:
 - .NET Core 3.1
