@@ -44,7 +44,7 @@ namespace Orange_Notes.Model
         {
             JsonSerializerOptions jsonOptions = new JsonSerializerOptions();
             jsonOptions.WriteIndented = true;
-            string jsonString = JsonSerializer.Serialize(objToUpload, jsonOptions);
+            byte[] jsonBytes = JsonSerializer.SerializeToUtf8Bytes(objToUpload, jsonOptions);
 
             var fileMetadata = new Google.Apis.Drive.v3.Data.File()
             {
@@ -55,7 +55,7 @@ namespace Orange_Notes.Model
             if (driveFileId == null)
             {
                 FilesResource.CreateMediaUpload request;
-                using (Stream stream = new MemoryStream(Encoding.UTF8.GetBytes(jsonString)))
+                using (Stream stream = new MemoryStream(jsonBytes))
                 {
                     request = service.Files.Create(fileMetadata, stream, "application/json");
                     request.Fields = "id";
@@ -65,7 +65,7 @@ namespace Orange_Notes.Model
             else
             {
                 FilesResource.UpdateMediaUpload request;
-                using (Stream stream = new MemoryStream(Encoding.UTF8.GetBytes(jsonString)))
+                using (Stream stream = new MemoryStream(jsonBytes))
                 {
                     request = service.Files.Update(fileMetadata, driveFileId, stream, "application/json");
                     request.Fields = "id";
