@@ -2,10 +2,10 @@
 using Orange_Notes.ViewModel;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
 
@@ -17,87 +17,62 @@ namespace Orange_Notes.View
 
     public partial class App : Application
     {
-        private Dictionary<string, Rect> restoreBounds;
+        private Dictionary<string, Rect> restorebounds;
+        private string restoreboundsFilepath = "Orange Notes Restore Bounds.json";
 
-        #region Application_Startup
-        private void Application_Startup(object sender, StartupEventArgs e)
+        private async void Application_StartupAsync(object sender, StartupEventArgs e)
         {
-            Application_CheckIfUnique();
-            Application_LoadSettingsSync();
-            Application_LoadNotesAndOpenWindowsAsync();
+            Application_ExitIfNotUnique();
+            Application_LoadSettings();
+            await Application_LoadNotesAsync();
         }
 
-        private void Application_CheckIfUnique()
+        private void Application_ExitIfNotUnique()
         {
             string processName = Process.GetCurrentProcess().ProcessName;
             int processCount = Process.GetProcesses().Where(p => p.ProcessName == processName).Count();
-
             if (processCount > 1)
-            {
-                Environment.Exit(0);
-            }
+                Environment.Exit(1);
         }
 
-        private void Application_LoadSettingsSync()
+        private void Application_LoadSettings()
         {
             NoteViewModel.LoadSettings();
-            restoreBounds = JsonSerializer2<Dictionary<string, Rect>>.Deserialize("Orange Notes Restore Bounds.json");
+            restorebounds = JsonSerializer2<Dictionary<string, Rect>>.Deserialize(restoreboundsFilepath);
         }
 
-        private void Application_LoadNotesAndOpenWindowsAsync()
+        private async Task Application_LoadNotesAsync()
         {
-            BackgroundWorker backgroundWorker1 = new BackgroundWorker();
-            backgroundWorker1.DoWork += backgroundWorker1_DoWork;
-            backgroundWorker1.RunWorkerCompleted += backgroundWorker1_RunWorkerCompleted;
-            backgroundWorker1_BeforeWork();
-            backgroundWorker1.RunWorkerAsync();
-        }
-
-        private void backgroundWorker1_BeforeWork()
-        {
-            if (NoteViewModel.storage == Storage.GoogleDrive)
+            if (NoteViewModel.Storage == Storage.GoogleDrive)
             {
-                new ConnectingWindow().Show();
+                ConnectingWindow connectingWindow = new ConnectingWindow();
+                connectingWindow.Show();
             }
-        }
-
-        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
-        {
-            NoteViewModel.LoadNotes();
-        }
-
-        private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            if (e.Error != null)
-                throw e.Error;
-
-            if (NoteViewModel.noteIds.Count == 0)
+            await Task.Run(() => NoteViewModel.LoadNotes());
+            if (NoteViewModel.NoteIds.Count == 0)
             {
                 NoteWindow n = new NoteWindow();
                 n.Show();
             }
             else
             {
-                foreach (string noteId in NoteViewModel.noteIds)
+                foreach (string noteId in NoteViewModel.NoteIds)
                 {
                     NoteWindow n = new NoteWindow(noteId);
-                    if (restoreBounds.ContainsKey(noteId))
-                    {
-                        n.setRestoreBounds(restoreBounds[noteId]);
-                    }
+                    if (restorebounds.ContainsKey(noteId))
+                        n.setRestoreBounds(restorebounds[noteId]);
                     n.Show();
                 }
             }
             this.CloseWindowsOfType<ConnectingWindow>();
         }
-        #endregion
 
-        #region Application_Exit
-        public void Application_Exit()
+        public async Task Application_ExitAsync()
         {
             Application_HideAllWindows();
-            Application_SaveSettingsSync();
-            Application_SaveNotesAndShutdownAsync();
+            Application_SaveSettings();
+            await Application_SaveNotesAsync();
+            Shutdown();
         }
 
         private void Application_HideAllWindows()
@@ -105,77 +80,52 @@ namespace Orange_Notes.View
             this.HideWindowsOfType<Window>();
         }
 
-        private void Application_SaveSettingsSync()
+        private void Application_SaveSettings()
         {
             NoteViewModel.SaveSettings();
             NoteWindow[] noteWindows = this.GetWindowsOfType<NoteWindow>();
-            restoreBounds.Clear();
+            restorebounds.Clear();
             foreach (NoteWindow w in noteWindows)
+                restorebounds.Add(w.NoteId, w.RestoreBounds);
+            JsonSerializer2<Dictionary<string, Rect>>.Serialize(restorebounds, restoreboundsFilepath);
+        }
+
+        private async Task Application_SaveNotesAsync()
+        {
+            if (NoteViewModel.Storage == Storage.GoogleDrive)
             {
-                restoreBounds.Add(w.noteId, w.RestoreBounds);
+                ConnectingWindow connectingWindow = new ConnectingWindow();
+                connectingWindow.Show();
             }
-            JsonSerializer2<Dictionary<string, Rect>>.Serialize(restoreBounds, "Orange Notes Restore Bounds.json");
-        }
-
-        private void Application_SaveNotesAndShutdownAsync()
-        {
-            BackgroundWorker backgroundWorker2 = new BackgroundWorker();
-            backgroundWorker2.DoWork += backgroundWorker2_DoWork;
-            backgroundWorker2.RunWorkerCompleted += backgroundWorker2_RunWorkerCompleted;
-            backgroundWorker2_BeforeWork();
-            backgroundWorker2.RunWorkerAsync();
-        }
-
-        private void backgroundWorker2_BeforeWork()
-        {
-            if (NoteViewModel.storage == Storage.GoogleDrive)
-            {
-                new ConnectingWindow().Show();
-            }
-        }
-
-        private void backgroundWorker2_DoWork(object sender, DoWorkEventArgs e)
-        {
-            NoteViewModel.SaveNotes();
-        }
-
-        private void backgroundWorker2_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            if (e.Error != null)
-                throw e.Error;
-
+            await Task.Run(() => NoteViewModel.SaveNotes());
             this.CloseWindowsOfType<ConnectingWindow>();
-            Shutdown();
         }
 
         private void Application_SessionEnding(object sender, SessionEndingCancelEventArgs e)
         {
             e.Cancel = true;
-            Application_SaveSettingsSync();
-            Application_SaveNotesSync();
+            Application_SaveSettings();
+            Application_SaveNotes();
             e.Cancel = false;
         }
 
-        private void Application_SaveNotesSync()
+        private void Application_SaveNotes()
         {
             NoteViewModel.SaveNotes();
         }
-        #endregion
 
-        #region Application_Helpers
         private void Application_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
             MessageBox.Show(e.Exception.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            Application_SaveExceptionDetailsToFile(DateTime.Now, e.Exception.Message, e.Exception.StackTrace);
+            Application_SaveExceptionDetailsToFile(DateTime.Now, e.Exception);
             Environment.Exit(1);
         }
 
-        private void Application_SaveExceptionDetailsToFile(DateTime time, string exception_message, string exception_stackTrace)
+        private void Application_SaveExceptionDetailsToFile(DateTime time, Exception exception)
         {
             string fileName = time.ToString("yyyy-MM-ddTHHmmss") + "-Exception.txt";
-            string content = exception_message + Environment.NewLine + exception_stackTrace;
+            string content = exception.Message + Environment.NewLine + exception.StackTrace;
             File.WriteAllText(fileName, content);
         }
-        #endregion
     }
 }

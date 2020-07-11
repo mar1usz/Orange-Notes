@@ -1,4 +1,6 @@
-﻿using Orange_Notes.ViewModel;
+﻿using Newtonsoft.Json.Bson;
+using Orange_Notes.ViewModel;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -10,25 +12,15 @@ namespace Orange_Notes.View
 
     public partial class NoteWindow : Window
     {
-        public string noteId {
+        public string NoteId
+        {
             get
             {
-                NoteViewModel vm = DataContext as NoteViewModel;
-                if (vm != null)
-                {
+                if (DataContext is NoteViewModel vm)
                     return vm.noteId;
-                }
                 else
-                {
                     return null;
-                }
             }
-        }
-
-        public NoteWindow(string noteId)
-        {
-            InitializeComponent();
-            DataContext = new NoteViewModel(noteId);
         }
 
         public NoteWindow()
@@ -37,35 +29,46 @@ namespace Orange_Notes.View
             DataContext = new NoteViewModel();
         }
 
-        private void RemoveButton_Click(object sender, RoutedEventArgs e)
+        public NoteWindow(string noteId)
+        {
+            InitializeComponent();
+            DataContext = new NoteViewModel(noteId);
+        }
+
+        private async void RemoveButton_ClickAsync(object sender, RoutedEventArgs e)
         {
             if (Application.Current.CountWindowsOfType<NoteWindow>() == 1)
-            {
-                CloseButton_Click(sender, e);
-            }
+                await Application_ExitAsync();
             else
-            {
                 Close();
-            }
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            new NoteWindow().Show();
+            NoteWindow note = new NoteWindow();
+            note.Show();
         }
 
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
         {
             if (!Application.Current.WindowOfTypeExists<SettingsWindow>())
-                new SettingsWindow().Show();
+            {
+                SettingsWindow settings = new SettingsWindow();
+                settings.Show();
+            }
         }
 
-        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        private async void CloseButton_ClickAsync(object sender, RoutedEventArgs e)
+        {
+            await Application_ExitAsync();
+        }
+
+        private async Task Application_ExitAsync()
         {
             App app = Application.Current as App;
-            if(app != null)
+            if (app != null)
             {
-                app.Application_Exit();
+                await app.Application_ExitAsync();
             }
         }
 

@@ -7,9 +7,10 @@ namespace Orange_Notes.Model
     {
         public static void Serialize(T objToSerialize, string filePath)
         {
-            JsonSerializerOptions jsonOptions = new JsonSerializerOptions();
-            jsonOptions.WriteIndented = true;
-
+            JsonSerializerOptions jsonOptions = new JsonSerializerOptions()
+            {
+                WriteIndented = true
+            };
             string jsonString = JsonSerializer.Serialize(objToSerialize, jsonOptions);
             File.WriteAllText(filePath, jsonString);
         }

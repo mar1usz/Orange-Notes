@@ -17,9 +17,8 @@ namespace Orange_Notes.Model
             }
             else
             {
-                int i_ = notes.Max(n => Int32.Parse(n.noteId));
+                int i_ = notes.Max(n => int.Parse(n.noteId));
                 i_++;
-
                 string i = i_.ToString();
                 notes.Add(new Note(i));
                 return i;
@@ -29,7 +28,6 @@ namespace Orange_Notes.Model
         public bool AddNote(string noteId)
         {
             int i = notes.FindIndex(n => n.noteId == noteId);
-
             if (i == -1)
             {
                 notes.Add(new Note(noteId));
@@ -44,7 +42,6 @@ namespace Orange_Notes.Model
         public bool RemoveNote(string noteId)
         {
             int i = notes.FindIndex(n => n.noteId == noteId);
-
             if (i != -1)
             {
                 notes.RemoveAt(i);
@@ -59,7 +56,6 @@ namespace Orange_Notes.Model
         public string GetNoteTitle(string noteId)
         {
             int i = notes.FindIndex(n => n.noteId == noteId);
-
             if (i != -1)
                 return notes[i].noteTitle;
             else
@@ -69,7 +65,6 @@ namespace Orange_Notes.Model
         public string GetNoteContent(string noteId)
         {
             int i = notes.FindIndex(n => n.noteId == noteId);
-
             if (i != -1)
                 return notes[i].noteContent;
             else
@@ -79,7 +74,6 @@ namespace Orange_Notes.Model
         public bool SetNoteTitle(string noteId, string noteTitle)
         {
             int i = notes.FindIndex(n => n.noteId == noteId);
-
             if (i != -1)
             {
                 notes[i].noteTitle = noteTitle;
@@ -94,7 +88,6 @@ namespace Orange_Notes.Model
         public bool SetNoteContent(string noteId, string noteContent)
         {
             int i = notes.FindIndex(n => n.noteId == noteId);
-
             if (i != -1)
             {
                 notes[i].noteContent = noteContent;
@@ -103,7 +96,7 @@ namespace Orange_Notes.Model
             else
             {
                 return false;
-            }            
+            }
         }
 
         public List<string> GetNoteIds()
@@ -111,7 +104,6 @@ namespace Orange_Notes.Model
             List<string> ids = new List<string>();
             foreach (Note n in notes)
                 ids.Add(n.noteId);
-
             return ids;
         }
 
@@ -150,8 +142,8 @@ namespace Orange_Notes.Model
         public Note(string noteId)
         {
             this.noteId = noteId;
-            this.noteTitle = "OrangeNote" + noteId;
-            this.noteContent = "";
+            noteTitle = "OrangeNote" + noteId;
+            noteContent = "";
         }
     }
 }

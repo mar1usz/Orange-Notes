@@ -12,51 +12,50 @@ namespace Orange_Notes.ViewModel
 
     public class NoteViewModel : ViewModelBase
     {
-        public static Storage storage { get; set; } = Storage.Json;
-        private static Notes notes = new Notes();
+        public static Storage Storage { get; set; } = Storage.Json;
+        public static Notes Notes { get; } = new Notes();
 
-        public static List<string> noteIds
-        {
-            get
-            {
-                return notes.GetNoteIds();
-            }
-        }
+        public static List<string> NoteIds { get => Notes.GetNoteIds(); }
+
+        private static string notesFilepath = "Orange Notes.json";
+        private static string credentialsFilepath = "credentials.json";
+        private static string settingsFilepath = "Orange Notes Settings.json";
+
 
         public static void SaveNotes()
         {
-            switch (storage)
+            switch (Storage)
             {
                 case Storage.Json:
-                    notes.JsonSerialize("Orange Notes.json");
+                    Notes.JsonSerialize(notesFilepath);
                     break;
                 case Storage.GoogleDrive:
-                    notes.GoogleDriveUpload("Orange Notes.json", "credentials.json");
+                    Notes.GoogleDriveUpload(notesFilepath, credentialsFilepath);
                     break;
             }
         }
 
         public static void LoadNotes()
         {
-            switch (storage)
+            switch (Storage)
             {
                 case Storage.Json:
-                    notes.JsonDeserialize("Orange Notes.json");
+                    Notes.JsonDeserialize(notesFilepath);
                     break;
                 case Storage.GoogleDrive:
-                    notes.GoogleDriveDownload("Orange Notes.json", "credentials.json");
+                    Notes.GoogleDriveDownload(notesFilepath, credentialsFilepath);
                     break;
             }
         }
 
         public static void SaveSettings()
         {
-            JsonSerializer2<Storage>.Serialize(storage, "Orange Notes Settings.json");
+            JsonSerializer2<Storage>.Serialize(Storage, settingsFilepath);
         }
 
         public static void LoadSettings()
         {
-            storage = JsonSerializer2<Storage>.Deserialize("Orange Notes Settings.json");
+            Storage = JsonSerializer2<Storage>.Deserialize(settingsFilepath);
         }
 
 
@@ -66,11 +65,11 @@ namespace Orange_Notes.ViewModel
         {
             get
             {
-                return notes.GetNoteTitle(noteId);
+                return Notes.GetNoteTitle(noteId);
             }
             set
             {
-                notes.SetNoteTitle(noteId, value);
+                Notes.SetNoteTitle(noteId, value);
                 NotifyPropertyChanged("noteTitle");
             }
         }
@@ -79,11 +78,11 @@ namespace Orange_Notes.ViewModel
         {
             get
             {
-                return notes.GetNoteContent(noteId);
+                return Notes.GetNoteContent(noteId);
             }
             set
             {
-                notes.SetNoteContent(noteId, value);
+                Notes.SetNoteContent(noteId, value);
                 NotifyPropertyChanged("noteContent");
             }
         }
@@ -93,13 +92,13 @@ namespace Orange_Notes.ViewModel
         public NoteViewModel(string noteId)
         {
             this.noteId = noteId;
-            this.removeNote = new RelayCommand(parameter => notes.RemoveNote(noteId));
+            removeNote = new RelayCommand(parameter => Notes.RemoveNote(noteId));
         }
 
         public NoteViewModel()
         {
-            this.noteId = notes.AddNote();
-            this.removeNote = new RelayCommand(parameter => notes.RemoveNote(noteId));
+            noteId = Notes.AddNote();
+            removeNote = new RelayCommand(parameter => Notes.RemoveNote(noteId));
         }
     }
 }

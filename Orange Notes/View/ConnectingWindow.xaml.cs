@@ -12,14 +12,14 @@ namespace Orange_Notes.View
         public ConnectingWindow()
         {
             InitializeComponent();
-            this.Left = SystemParameters.WorkArea.Right - 10 - this.Width;
-            this.Top = SystemParameters.WorkArea.Top + 10;
+            Left = SystemParameters.WorkArea.Right - 10 - Width;
+            Top = SystemParameters.WorkArea.Top + 10;
         }
 
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
             base.OnMouseLeftButtonDown(e);
-            this.DragMove();
+            DragMove();
         }
     }
 }

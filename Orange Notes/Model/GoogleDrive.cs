@@ -5,7 +5,6 @@ using Google.Apis.Util.Store;
 using System.Threading;
 using System.IO;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using System;
 
@@ -42,8 +41,10 @@ namespace Orange_Notes.Model
 
         public static void UploadFile(T objToUpload, string fileName)
         {
-            JsonSerializerOptions jsonOptions = new JsonSerializerOptions();
-            jsonOptions.WriteIndented = true;
+            JsonSerializerOptions jsonOptions = new JsonSerializerOptions()
+            {
+                WriteIndented = true
+            };
             byte[] jsonBytes = JsonSerializer.SerializeToUtf8Bytes(objToUpload, jsonOptions);
 
             var fileMetadata = new Google.Apis.Drive.v3.Data.File()
@@ -77,7 +78,6 @@ namespace Orange_Notes.Model
         public static T DownloadFile(string fileName)
         {
             string driveFileId = GetDriveFileId(fileName);
-
             if (driveFileId == null)
             {
                 return new T();
@@ -102,7 +102,6 @@ namespace Orange_Notes.Model
         {
             FilesResource.ListRequest listRequest = service.Files.List();
             IList<Google.Apis.Drive.v3.Data.File> files = listRequest.Execute().Files;
-
             foreach (var f in files)
             {
                 if (f.Name == fileName)

@@ -19,9 +19,9 @@ namespace Orange_Notes.View
             InitializeComponent();
             StartupCheckBox_Refresh();
             StorageCheckboxes_Refresh();
-            this.KeyDown += Window_KeyDown;
-            this.Left = SystemParameters.WorkArea.Left + SystemParameters.WorkArea.Width / 2 - this.Width / 2;
-            this.Top = SystemParameters.WorkArea.Top + 10;
+            KeyDown += Window_KeyDown;
+            Left = SystemParameters.WorkArea.Left + SystemParameters.WorkArea.Width / 2 - Width / 2;
+            Top = SystemParameters.WorkArea.Top + 10;
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
@@ -51,30 +51,22 @@ namespace Orange_Notes.View
         {
             string filePath = Environment.GetFolderPath(Environment.SpecialFolder.Startup) + "\\Orange Notes.lnk";
             if (File.Exists(filePath))
-            {
                 startupCheckbox.IsChecked = true;
-            }
             else
-            {
                 startupCheckbox.IsChecked = false;
-            }
         }
 
         private void JsonCheckBox_Click(object sender, RoutedEventArgs e)
         {
             if (jsonCheckbox.IsChecked == true)
-            {
-                NoteViewModel.storage = Storage.Json;
-            }
+                NoteViewModel.Storage = Storage.Json;
             StorageCheckboxes_Refresh();
         }
 
         private void GoogleDriveCheckBox_Click(object sender, RoutedEventArgs e)
         {
-            if (jsonCheckbox.IsChecked == true)
-            {
-                NoteViewModel.storage = Storage.GoogleDrive;
-            }
+            if (googleDriveCheckbox.IsChecked == true)
+                NoteViewModel.Storage = Storage.GoogleDrive;
             StorageCheckboxes_Refresh();
         }
 
@@ -82,28 +74,27 @@ namespace Orange_Notes.View
         {
             jsonCheckbox.IsChecked = false;
             googleDriveCheckbox.IsChecked = false;
-            if (NoteViewModel.storage == Storage.Json)
+            switch (NoteViewModel.Storage)
             {
-                jsonCheckbox.IsChecked = true;
-            }
-            else if (NoteViewModel.storage == Storage.GoogleDrive)
-            {
-                googleDriveCheckbox.IsChecked = true;
+                case Storage.Json:
+                    jsonCheckbox.IsChecked = true;
+                    break;
+                case Storage.GoogleDrive:
+                    googleDriveCheckbox.IsChecked = true;
+                    break;
             }
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape)
-            {
                 Close();
-            }
         }
 
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
             base.OnMouseLeftButtonDown(e);
-            this.DragMove();
+            DragMove();
         }
     }
 }

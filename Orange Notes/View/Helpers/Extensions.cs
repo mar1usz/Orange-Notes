@@ -17,18 +17,14 @@ namespace Orange_Notes.View
         {
             windowType[] windowTypeWindows = a.Windows.OfType<windowType>().ToArray();
             foreach (windowType w in windowTypeWindows)
-            {
                 w.Close();
-            }
         }
 
         public static void HideWindowsOfType<windowType>(this Application a) where windowType : Window
         {
             windowType[] windowTypeWindows = a.Windows.OfType<windowType>().ToArray();
             foreach (windowType w in windowTypeWindows)
-            {
                 w.Hide();
-            }
         }
 
         public static int CountWindowsOfType<windowType>(this Application a) where windowType : Window
@@ -46,7 +42,7 @@ namespace Orange_Notes.View
         public static bool WindowOfTypeExists<windowType>(this Application a) where windowType : Window
         {
             windowType[] windowTypeWindows = a.Windows.OfType<windowType>().ToArray();
-            return windowTypeWindows.Any() ? true : false;
+            return windowTypeWindows.Any();
         }
     }
 }
