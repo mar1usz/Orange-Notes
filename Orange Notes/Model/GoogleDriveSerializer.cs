@@ -15,7 +15,7 @@ namespace Orange_Notes.Model
     public class GoogleDriveSerializer<T> : ISerializer<T> where T : new()
     {
         private DriveService service = null;
-        private string credentialsFilePath = "credentials.json";
+        private readonly string credentialsFilePath = "credentials.json";
 
         public void Serialize(T objToUpload, string fileName)
         {
@@ -180,7 +180,6 @@ namespace Orange_Notes.Model
         {
             if (service != null)
                 return;
-
             string[] Scopes = { DriveService.Scope.DriveFile };
             string ApplicationName = "Orange Notes";
             UserCredential credential;

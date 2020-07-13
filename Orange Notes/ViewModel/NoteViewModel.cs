@@ -1,5 +1,4 @@
 ﻿using Orange_Notes.Model;
-using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -48,8 +47,8 @@ namespace Orange_Notes.ViewModel
         public static List<string> NoteIds { get => Notes.GetNoteIds(); }
         private static Notes Notes = new Notes();
 
-        private static string NotesFilepath = "Orange Notes.json";
-        private static string SettingsFilepath = "Orange Notes Settings.json";
+        private static readonly string NotesFilepath = "Orange Notes.json";
+        private static readonly string SettingsFilepath = "Orange Notes Settings.json";
 
         public static void SaveNotes()
         {
