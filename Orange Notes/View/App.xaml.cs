@@ -48,7 +48,7 @@ namespace Orange_Notes.View
                 ConnectingWindow connectingWindow = new ConnectingWindow();
                 connectingWindow.Show();
             }
-            await Task.Run(() => NoteViewModel.LoadNotes());
+            await NoteViewModel.LoadNotesAsync();
             if (NoteViewModel.NoteIds.Count == 0)
             {
                 NoteWindow n = new NoteWindow();
@@ -97,7 +97,7 @@ namespace Orange_Notes.View
                 ConnectingWindow connectingWindow = new ConnectingWindow();
                 connectingWindow.Show();
             }
-            await Task.Run(() => NoteViewModel.SaveNotes());
+            await NoteViewModel.SaveNotesAsync();
             this.CloseWindowsOfType<ConnectingWindow>();
         }
 

@@ -1,5 +1,6 @@
 ﻿using Orange_Notes.Model;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace Orange_Notes.ViewModel
@@ -20,7 +21,6 @@ namespace Orange_Notes.ViewModel
         private static string notesFilepath = "Orange Notes.json";
         private static string credentialsFilepath = "credentials.json";
         private static string settingsFilepath = "Orange Notes Settings.json";
-
 
         public static void SaveNotes()
         {
@@ -44,6 +44,32 @@ namespace Orange_Notes.ViewModel
                     break;
                 case Storage.GoogleDrive:
                     Notes.GoogleDriveDownload(notesFilepath, credentialsFilepath);
+                    break;
+            }
+        }
+
+        public static async Task SaveNotesAsync()
+        {
+            switch (Storage)
+            {
+                case Storage.Json:
+                    await Notes.JsonSerializeAsync(notesFilepath);
+                    break;
+                case Storage.GoogleDrive:
+                    await Notes.GoogleDriveUploadAsync(notesFilepath, credentialsFilepath);
+                    break;
+            }
+        }
+
+        public static async Task LoadNotesAsync()
+        {
+            switch (Storage)
+            {
+                case Storage.Json:
+                    await Notes.JsonDeserializeAsync(notesFilepath);
+                    break;
+                case Storage.GoogleDrive:
+                    await Notes.GoogleDriveDownloadAsync(notesFilepath, credentialsFilepath);
                     break;
             }
         }

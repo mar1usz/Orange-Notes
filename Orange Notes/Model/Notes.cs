@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Orange_Notes.Model
 {
@@ -127,6 +128,28 @@ namespace Orange_Notes.Model
         {
             GoogleDrive<List<Note>>.Authorize(credentialsFilePath);
             notes = GoogleDrive<List<Note>>.DownloadFile(fileName);
+        }
+
+        public async Task JsonSerializeAsync(string filePath)
+        {
+            await JsonSerializer2<List<Note>>.SerializeAsync(notes, filePath);
+        }
+
+        public async Task JsonDeserializeAsync(string filePath)
+        {
+            notes = await JsonSerializer2<List<Note>>.DeserializeAsync(filePath);
+        }
+
+        public async Task GoogleDriveUploadAsync(string fileName, string credentialsFilePath)
+        {
+            await GoogleDrive<List<Note>>.AuthorizeAsync(credentialsFilePath);
+            await GoogleDrive<List<Note>>.UploadFileAsync(notes, fileName);
+        }
+
+        public async Task GoogleDriveDownloadAsync(string fileName, string credentialsFilePath)
+        {
+            await GoogleDrive<List<Note>>.AuthorizeAsync(credentialsFilePath);
+            notes = await GoogleDrive<List<Note>>.DownloadFileAsync(fileName);
         }
     }
 

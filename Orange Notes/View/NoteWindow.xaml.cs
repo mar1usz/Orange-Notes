@@ -65,11 +65,8 @@ namespace Orange_Notes.View
 
         private async Task Application_ExitAsync()
         {
-            App app = Application.Current as App;
-            if (app != null)
-            {
+            if (Application.Current is App app)
                 await app.Application_ExitAsync();
-            }
         }
 
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
