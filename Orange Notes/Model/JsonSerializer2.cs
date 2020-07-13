@@ -12,7 +12,6 @@ namespace Orange_Notes.Model
             {
                 WriteIndented = true
             };
-
             string jsonString = JsonSerializer.Serialize(objToSerialize, jsonOptions);
             File.WriteAllText(filePath, jsonString);
         }

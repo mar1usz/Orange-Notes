@@ -30,8 +30,8 @@ namespace Orange_Notes.Model
             {
                 Name = fileName
             };
-            string driveFileId = GetDriveFileId(fileName);
 
+            string driveFileId = GetDriveFileId(fileName);
             if (driveFileId == null)
             {
                 FilesResource.CreateMediaUpload request;
@@ -85,7 +85,6 @@ namespace Orange_Notes.Model
             string[] Scopes = { DriveService.Scope.DriveFile };
             string ApplicationName = "Orange Notes";
             UserCredential credential;
-
             using (var stream = new FileStream(credentialsFilePath, FileMode.Open, FileAccess.Read))
             {
                 string credPath = "token.json";
@@ -96,7 +95,6 @@ namespace Orange_Notes.Model
                     CancellationToken.None,
                     new FileDataStore(credPath, true)).Result;
             }
-
             service = new DriveService(new BaseClientService.Initializer()
             {
                 HttpClientInitializer = credential,
@@ -183,7 +181,6 @@ namespace Orange_Notes.Model
             string[] Scopes = { DriveService.Scope.DriveFile };
             string ApplicationName = "Orange Notes";
             UserCredential credential;
-
             using (var stream = new FileStream(credentialsFilePath, FileMode.Open, FileAccess.Read))
             {
                 string credPath = "token.json";
@@ -195,7 +192,6 @@ namespace Orange_Notes.Model
                     CancellationToken.None,
                     new FileDataStore(credPath, true)));
             }
-
             service = new DriveService(new BaseClientService.Initializer()
             {
                 HttpClientInitializer = credential,
