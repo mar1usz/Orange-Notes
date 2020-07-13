@@ -38,7 +38,8 @@ namespace Orange_Notes.View
         private void Application_LoadSettings()
         {
             NoteViewModel.LoadSettings();
-            restorebounds = JsonSerializer2<Dictionary<string, Rect>>.Deserialize(restoreboundsFilepath);
+            JsonSerializer2<Dictionary<string, Rect>> json = new JsonSerializer2<Dictionary<string, Rect>>();
+            restorebounds = json.Deserialize(restoreboundsFilepath);
         }
 
         private async Task Application_LoadNotesAsync()
@@ -87,7 +88,8 @@ namespace Orange_Notes.View
             restorebounds.Clear();
             foreach (NoteWindow w in noteWindows)
                 restorebounds.Add(w.NoteId, w.RestoreBounds);
-            JsonSerializer2<Dictionary<string, Rect>>.Serialize(restorebounds, restoreboundsFilepath);
+            JsonSerializer2<Dictionary<string, Rect>> json = new JsonSerializer2<Dictionary<string, Rect>>();
+            json.Serialize(restorebounds, restoreboundsFilepath);
         }
 
         private async Task Application_SaveNotesAsync()

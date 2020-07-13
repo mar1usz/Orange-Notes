@@ -17,7 +17,7 @@ namespace Orange_Notes.View
             get
             {
                 if (DataContext is NoteViewModel vm)
-                    return vm.noteId;
+                    return vm.NoteId;
                 else
                     return null;
             }

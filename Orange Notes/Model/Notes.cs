@@ -7,6 +7,7 @@ namespace Orange_Notes.Model
 {
     public class Notes
     {
+        public ISerializer<List<Note>> Serializer { get; set; } = new JsonSerializer2<List<Note>>();
         private List<Note> notes = new List<Note>();
 
         public string AddNote()
@@ -18,7 +19,7 @@ namespace Orange_Notes.Model
             }
             else
             {
-                int i_ = notes.Max(n => int.Parse(n.noteId));
+                int i_ = notes.Max(n => int.Parse(n.NoteId));
                 i_++;
                 string i = i_.ToString();
                 notes.Add(new Note(i));
@@ -28,7 +29,7 @@ namespace Orange_Notes.Model
 
         public bool AddNote(string noteId)
         {
-            int i = notes.FindIndex(n => n.noteId == noteId);
+            int i = notes.FindIndex(n => n.NoteId == noteId);
             if (i == -1)
             {
                 notes.Add(new Note(noteId));
@@ -42,7 +43,7 @@ namespace Orange_Notes.Model
 
         public bool RemoveNote(string noteId)
         {
-            int i = notes.FindIndex(n => n.noteId == noteId);
+            int i = notes.FindIndex(n => n.NoteId == noteId);
             if (i != -1)
             {
                 notes.RemoveAt(i);
@@ -56,28 +57,28 @@ namespace Orange_Notes.Model
 
         public string GetNoteTitle(string noteId)
         {
-            int i = notes.FindIndex(n => n.noteId == noteId);
+            int i = notes.FindIndex(n => n.NoteId == noteId);
             if (i != -1)
-                return notes[i].noteTitle;
+                return notes[i].NoteTitle;
             else
                 return null;
         }
 
         public string GetNoteContent(string noteId)
         {
-            int i = notes.FindIndex(n => n.noteId == noteId);
+            int i = notes.FindIndex(n => n.NoteId == noteId);
             if (i != -1)
-                return notes[i].noteContent;
+                return notes[i].NoteContent;
             else
                 return null;
         }
 
         public bool SetNoteTitle(string noteId, string noteTitle)
         {
-            int i = notes.FindIndex(n => n.noteId == noteId);
+            int i = notes.FindIndex(n => n.NoteId == noteId);
             if (i != -1)
             {
-                notes[i].noteTitle = noteTitle;
+                notes[i].NoteTitle = noteTitle;
                 return true;
             }
             else
@@ -88,10 +89,10 @@ namespace Orange_Notes.Model
 
         public bool SetNoteContent(string noteId, string noteContent)
         {
-            int i = notes.FindIndex(n => n.noteId == noteId);
+            int i = notes.FindIndex(n => n.NoteId == noteId);
             if (i != -1)
             {
-                notes[i].noteContent = noteContent;
+                notes[i].NoteContent = noteContent;
                 return true;
             }
             else
@@ -104,69 +105,45 @@ namespace Orange_Notes.Model
         {
             List<string> ids = new List<string>();
             foreach (Note n in notes)
-                ids.Add(n.noteId);
+                ids.Add(n.NoteId);
             return ids;
         }
 
-        public void JsonSerialize(string filePath)
+        public void Serialize(string filePath)
         {
-            JsonSerializer2<List<Note>>.Serialize(notes, filePath);
+            Serializer.Serialize(notes, filePath);
         }
 
-        public void JsonDeserialize(string filePath)
+        public void Deserialize(string filePath)
         {
-            notes = JsonSerializer2<List<Note>>.Deserialize(filePath);
+            notes = Serializer.Deserialize(filePath);
         }
 
-        public void GoogleDriveUpload(string fileName, string credentialsFilePath)
+        public async Task SerializeAsync(string filePath)
         {
-            GoogleDrive<List<Note>>.Authorize(credentialsFilePath);
-            GoogleDrive<List<Note>>.UploadFile(notes, fileName);
+            await Serializer.SerializeAsync(notes, filePath);
         }
 
-        public void GoogleDriveDownload(string fileName, string credentialsFilePath)
+        public async Task DeserializeAsync(string filePath)
         {
-            GoogleDrive<List<Note>>.Authorize(credentialsFilePath);
-            notes = GoogleDrive<List<Note>>.DownloadFile(fileName);
-        }
-
-        public async Task JsonSerializeAsync(string filePath)
-        {
-            await JsonSerializer2<List<Note>>.SerializeAsync(notes, filePath);
-        }
-
-        public async Task JsonDeserializeAsync(string filePath)
-        {
-            notes = await JsonSerializer2<List<Note>>.DeserializeAsync(filePath);
-        }
-
-        public async Task GoogleDriveUploadAsync(string fileName, string credentialsFilePath)
-        {
-            await GoogleDrive<List<Note>>.AuthorizeAsync(credentialsFilePath);
-            await GoogleDrive<List<Note>>.UploadFileAsync(notes, fileName);
-        }
-
-        public async Task GoogleDriveDownloadAsync(string fileName, string credentialsFilePath)
-        {
-            await GoogleDrive<List<Note>>.AuthorizeAsync(credentialsFilePath);
-            notes = await GoogleDrive<List<Note>>.DownloadFileAsync(fileName);
+            notes = await Serializer.DeserializeAsync(filePath);
         }
     }
 
     public class Note
     {
-        public string noteId { get; set; }
-        public string noteTitle { get; set; }
-        public string noteContent { get; set; }
+        public string NoteId { get; set; }
+        public string NoteTitle { get; set; }
+        public string NoteContent { get; set; }
 
         public Note()
         { }
 
         public Note(string noteId)
         {
-            this.noteId = noteId;
-            noteTitle = "OrangeNote" + noteId;
-            noteContent = "";
+            NoteId = noteId;
+            NoteTitle = "OrangeNote" + noteId;
+            NoteContent = "";
         }
     }
 }

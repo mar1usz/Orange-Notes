@@ -1,4 +1,5 @@
 ﻿using Orange_Notes.Model;
+using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -13,118 +14,116 @@ namespace Orange_Notes.ViewModel
 
     public class NoteViewModel : ViewModelBase
     {
-        public static Storage Storage { get; set; } = Storage.Json;
-        public static Notes Notes { get; } = new Notes();
+        public static Storage Storage
+        {
+            get
+            {
+                Storage _storage = Storage.Json;
+                switch (Notes.Serializer)
+                {
+                    case JsonSerializer2<List<Note>> _:
+                        _storage = Storage.Json;
+                        break;
+                    case GoogleDriveSerializer<List<Note>> _:
+                        _storage = Storage.GoogleDrive;
+                        break;
+                }
+                return _storage;
+            }
+
+            set
+            {
+                switch (value)
+                {
+                    case Storage.Json:
+                        Notes.Serializer = new JsonSerializer2<List<Note>>();
+                        break;
+                    case Storage.GoogleDrive:
+                        Notes.Serializer = new GoogleDriveSerializer<List<Note>>();
+                        break;
+                }
+            }
+        }
 
         public static List<string> NoteIds { get => Notes.GetNoteIds(); }
+        private static Notes Notes = new Notes();
 
-        private static string notesFilepath = "Orange Notes.json";
-        private static string credentialsFilepath = "credentials.json";
-        private static string settingsFilepath = "Orange Notes Settings.json";
+        private static string NotesFilepath = "Orange Notes.json";
+        private static string SettingsFilepath = "Orange Notes Settings.json";
 
         public static void SaveNotes()
         {
-            switch (Storage)
-            {
-                case Storage.Json:
-                    Notes.JsonSerialize(notesFilepath);
-                    break;
-                case Storage.GoogleDrive:
-                    Notes.GoogleDriveUpload(notesFilepath, credentialsFilepath);
-                    break;
-            }
+            Notes.Serialize(NotesFilepath);
         }
 
         public static void LoadNotes()
         {
-            switch (Storage)
-            {
-                case Storage.Json:
-                    Notes.JsonDeserialize(notesFilepath);
-                    break;
-                case Storage.GoogleDrive:
-                    Notes.GoogleDriveDownload(notesFilepath, credentialsFilepath);
-                    break;
-            }
+            Notes.Deserialize(NotesFilepath);
         }
 
         public static async Task SaveNotesAsync()
         {
-            switch (Storage)
-            {
-                case Storage.Json:
-                    await Notes.JsonSerializeAsync(notesFilepath);
-                    break;
-                case Storage.GoogleDrive:
-                    await Notes.GoogleDriveUploadAsync(notesFilepath, credentialsFilepath);
-                    break;
-            }
+            await Notes.SerializeAsync(NotesFilepath);
         }
 
         public static async Task LoadNotesAsync()
         {
-            switch (Storage)
-            {
-                case Storage.Json:
-                    await Notes.JsonDeserializeAsync(notesFilepath);
-                    break;
-                case Storage.GoogleDrive:
-                    await Notes.GoogleDriveDownloadAsync(notesFilepath, credentialsFilepath);
-                    break;
-            }
+            await Notes.DeserializeAsync(NotesFilepath);
         }
 
         public static void SaveSettings()
         {
-            JsonSerializer2<Storage>.Serialize(Storage, settingsFilepath);
+            JsonSerializer2<Storage> json = new JsonSerializer2<Storage>();
+            json.Serialize(Storage, SettingsFilepath);
         }
 
         public static void LoadSettings()
         {
-            Storage = JsonSerializer2<Storage>.Deserialize(settingsFilepath);
+            JsonSerializer2<Storage> json = new JsonSerializer2<Storage>();
+            Storage = json.Deserialize(SettingsFilepath);
         }
 
 
-        public string noteId { get; }
+        public string NoteId { get; }
 
-        public string noteTitle
+        public string NoteTitle
         {
             get
             {
-                return Notes.GetNoteTitle(noteId);
+                return Notes.GetNoteTitle(NoteId);
             }
             set
             {
-                Notes.SetNoteTitle(noteId, value);
-                NotifyPropertyChanged("noteTitle");
+                Notes.SetNoteTitle(NoteId, value);
+                NotifyPropertyChanged("NoteTitle");
             }
         }
 
-        public string noteContent
+        public string NoteContent
         {
             get
             {
-                return Notes.GetNoteContent(noteId);
+                return Notes.GetNoteContent(NoteId);
             }
             set
             {
-                Notes.SetNoteContent(noteId, value);
-                NotifyPropertyChanged("noteContent");
+                Notes.SetNoteContent(NoteId, value);
+                NotifyPropertyChanged("NoteContent");
             }
         }
 
-        public ICommand removeNote { get; }
+        public ICommand RemoveNote { get; }
 
         public NoteViewModel(string noteId)
         {
-            this.noteId = noteId;
-            removeNote = new RelayCommand(parameter => Notes.RemoveNote(noteId));
+            NoteId = noteId;
+            RemoveNote = new RelayCommand(parameter => Notes.RemoveNote(NoteId));
         }
 
         public NoteViewModel()
         {
-            noteId = Notes.AddNote();
-            removeNote = new RelayCommand(parameter => Notes.RemoveNote(noteId));
+            NoteId = Notes.AddNote();
+            RemoveNote = new RelayCommand(parameter => Notes.RemoveNote(NoteId));
         }
     }
 }

@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 
 namespace Orange_Notes.Model
 {
-    public static class JsonSerializer2<T> where T : new()
+    public class JsonSerializer2<T> : ISerializer<T> where T : new()
     {
-        public static void Serialize(T objToSerialize, string filePath)
+        public void Serialize(T objToSerialize, string filePath)
         {
             JsonSerializerOptions jsonOptions = new JsonSerializerOptions()
             {
@@ -17,7 +17,7 @@ namespace Orange_Notes.Model
             File.WriteAllText(filePath, jsonString);
         }
 
-        public static T Deserialize(string filePath)
+        public T Deserialize(string filePath)
         {
             if (File.Exists(filePath))
             {
@@ -30,7 +30,7 @@ namespace Orange_Notes.Model
             }
         }
 
-        public static async Task SerializeAsync(T objToSerialize, string filePath)
+        public async Task SerializeAsync(T objToSerialize, string filePath)
         {
             JsonSerializerOptions jsonOptions = new JsonSerializerOptions()
             {
@@ -43,7 +43,7 @@ namespace Orange_Notes.Model
             }
         }
 
-        public static async Task<T> DeserializeAsync(string filePath)
+        public async Task<T> DeserializeAsync(string filePath)
         {
             if (File.Exists(filePath))
             {
