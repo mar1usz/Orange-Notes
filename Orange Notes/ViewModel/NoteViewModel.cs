@@ -17,38 +17,33 @@ namespace Orange_Notes.ViewModel
         {
             get
             {
-                Storage _storage = Storage.Json;
-                switch (Notes.Serializer)
-                {
-                    case JsonSerializer2<List<Note>> _:
-                        _storage = Storage.Json;
-                        break;
-                    case GoogleDriveSerializer<List<Note>> _:
-                        _storage = Storage.GoogleDrive;
-                        break;
-                }
                 return _storage;
             }
-
             set
             {
                 switch (value)
                 {
                     case Storage.Json:
+                        _storage = Storage.Json;
                         Notes.Serializer = new JsonSerializer2<List<Note>>();
                         break;
                     case Storage.GoogleDrive:
+                        _storage = Storage.GoogleDrive;
                         Notes.Serializer = new GoogleDriveSerializer<List<Note>>();
                         break;
                 }
             }
         }
+        private static Storage _storage = Storage.Json;
 
-        public static List<string> NoteIds { get => Notes.GetNoteIds(); }
         private static Notes Notes = new Notes();
-
         private static readonly string NotesFilepath = "Orange Notes.json";
         private static readonly string SettingsFilepath = "Orange Notes Settings.json";
+
+        public static List<string> GetNoteIds()
+        {
+            return Notes.GetNoteIds();
+        }
 
         public static void SaveNotes()
         {

@@ -17,8 +17,8 @@ namespace Orange_Notes.View
 
     public partial class App : Application
     {
-        private Dictionary<string, Rect> restorebounds;
-        private string restoreboundsFilepath = "Orange Notes Restore Bounds.json";
+        private Dictionary<string, Rect> Restorebounds;
+        private readonly string RestoreboundsFilepath = "Orange Notes Restore Bounds.json";
 
         private async void Application_StartupAsync(object sender, StartupEventArgs e)
         {
@@ -39,7 +39,7 @@ namespace Orange_Notes.View
         {
             NoteViewModel.LoadSettings();
             JsonSerializer2<Dictionary<string, Rect>> json = new JsonSerializer2<Dictionary<string, Rect>>();
-            restorebounds = json.Deserialize(restoreboundsFilepath);
+            Restorebounds = json.Deserialize(RestoreboundsFilepath);
         }
 
         private async Task Application_LoadNotesAsync()
@@ -50,18 +50,18 @@ namespace Orange_Notes.View
                 connectingWindow.Show();
             }
             await NoteViewModel.LoadNotesAsync();
-            if (NoteViewModel.NoteIds.Count == 0)
+            if (!NoteViewModel.GetNoteIds().Any())
             {
                 NoteWindow n = new NoteWindow();
                 n.Show();
             }
             else
             {
-                foreach (string noteId in NoteViewModel.NoteIds)
+                foreach (string noteId in NoteViewModel.GetNoteIds())
                 {
                     NoteWindow n = new NoteWindow(noteId);
-                    if (restorebounds.ContainsKey(noteId))
-                        n.setRestoreBounds(restorebounds[noteId]);
+                    if (Restorebounds.ContainsKey(noteId))
+                        n.setRestoreBounds(Restorebounds[noteId]);
                     n.Show();
                 }
             }
@@ -85,11 +85,11 @@ namespace Orange_Notes.View
         {
             NoteViewModel.SaveSettings();
             NoteWindow[] noteWindows = this.GetWindowsOfType<NoteWindow>();
-            restorebounds.Clear();
+            Restorebounds.Clear();
             foreach (NoteWindow w in noteWindows)
-                restorebounds.Add(w.NoteId, w.RestoreBounds);
+                Restorebounds.Add(w.NoteId, w.RestoreBounds);
             JsonSerializer2<Dictionary<string, Rect>> json = new JsonSerializer2<Dictionary<string, Rect>>();
-            json.Serialize(restorebounds, restoreboundsFilepath);
+            json.Serialize(Restorebounds, RestoreboundsFilepath);
         }
 
         private async Task Application_SaveNotesAsync()
