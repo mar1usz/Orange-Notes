@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -7,32 +6,32 @@ namespace Orange_Notes.Model
 {
     public class Notes
     {
-        public ISerializer<List<Note>> Serializer { get; set; } = new JsonSerializer2<List<Note>>();
-        private List<Note> notes = new List<Note>();
+        public ISerializer<List<Note>> Serializer { get; set; }
+        private List<Note> NotesList = new List<Note>();
 
         public string AddNote()
         {
-            if (!notes.Any())
+            if (!NotesList.Any())
             {
-                notes.Add(new Note("1"));
+                NotesList.Add(new Note("1"));
                 return "1";
             }
             else
             {
-                int i_ = notes.Max(n => int.Parse(n.NoteId));
+                int i_ = NotesList.Max(n => int.Parse(n.NoteId));
                 i_++;
                 string i = i_.ToString();
-                notes.Add(new Note(i));
+                NotesList.Add(new Note(i));
                 return i;
             }
         }
 
         public bool AddNote(string noteId)
         {
-            int i = notes.FindIndex(n => n.NoteId == noteId);
+            int i = NotesList.FindIndex(n => n.NoteId == noteId);
             if (i == -1)
             {
-                notes.Add(new Note(noteId));
+                NotesList.Add(new Note(noteId));
                 return true;
             }
             else
@@ -43,10 +42,10 @@ namespace Orange_Notes.Model
 
         public bool RemoveNote(string noteId)
         {
-            int i = notes.FindIndex(n => n.NoteId == noteId);
+            int i = NotesList.FindIndex(n => n.NoteId == noteId);
             if (i != -1)
             {
-                notes.RemoveAt(i);
+                NotesList.RemoveAt(i);
                 return true;
             }
             else
@@ -57,28 +56,28 @@ namespace Orange_Notes.Model
 
         public string GetNoteTitle(string noteId)
         {
-            int i = notes.FindIndex(n => n.NoteId == noteId);
+            int i = NotesList.FindIndex(n => n.NoteId == noteId);
             if (i != -1)
-                return notes[i].NoteTitle;
+                return NotesList[i].NoteTitle;
             else
                 return null;
         }
 
         public string GetNoteContent(string noteId)
         {
-            int i = notes.FindIndex(n => n.NoteId == noteId);
+            int i = NotesList.FindIndex(n => n.NoteId == noteId);
             if (i != -1)
-                return notes[i].NoteContent;
+                return NotesList[i].NoteContent;
             else
                 return null;
         }
 
         public bool SetNoteTitle(string noteId, string noteTitle)
         {
-            int i = notes.FindIndex(n => n.NoteId == noteId);
+            int i = NotesList.FindIndex(n => n.NoteId == noteId);
             if (i != -1)
             {
-                notes[i].NoteTitle = noteTitle;
+                NotesList[i].NoteTitle = noteTitle;
                 return true;
             }
             else
@@ -89,10 +88,10 @@ namespace Orange_Notes.Model
 
         public bool SetNoteContent(string noteId, string noteContent)
         {
-            int i = notes.FindIndex(n => n.NoteId == noteId);
+            int i = NotesList.FindIndex(n => n.NoteId == noteId);
             if (i != -1)
             {
-                notes[i].NoteContent = noteContent;
+                NotesList[i].NoteContent = noteContent;
                 return true;
             }
             else
@@ -104,29 +103,29 @@ namespace Orange_Notes.Model
         public List<string> GetNoteIds()
         {
             List<string> ids = new List<string>();
-            foreach (Note n in notes)
+            foreach (Note n in NotesList)
                 ids.Add(n.NoteId);
             return ids;
         }
 
         public void Serialize(string filePath)
         {
-            Serializer.Serialize(notes, filePath);
+            Serializer.Serialize(NotesList, filePath);
         }
 
         public void Deserialize(string filePath)
         {
-            notes = Serializer.Deserialize(filePath);
+            NotesList = Serializer.Deserialize(filePath);
         }
 
         public async Task SerializeAsync(string filePath)
         {
-            await Serializer.SerializeAsync(notes, filePath);
+            await Serializer.SerializeAsync(NotesList, filePath);
         }
 
         public async Task DeserializeAsync(string filePath)
         {
-            notes = await Serializer.DeserializeAsync(filePath);
+            NotesList = await Serializer.DeserializeAsync(filePath);
         }
     }
 

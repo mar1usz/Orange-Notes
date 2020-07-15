@@ -34,8 +34,7 @@ namespace Orange_Notes.ViewModel
                 }
             }
         }
-        private static Storage _storage = Storage.Json;
-
+        private static Storage _storage;
         private static Notes Notes = new Notes();
         private static readonly string NotesFilepath = "Orange Notes.json";
         private static readonly string SettingsFilepath = "Orange Notes Settings.json";
@@ -79,7 +78,6 @@ namespace Orange_Notes.ViewModel
 
 
         public string NoteId { get; }
-
         public string NoteTitle
         {
             get
@@ -92,7 +90,6 @@ namespace Orange_Notes.ViewModel
                 NotifyPropertyChanged("NoteTitle");
             }
         }
-
         public string NoteContent
         {
             get
@@ -105,7 +102,6 @@ namespace Orange_Notes.ViewModel
                 NotifyPropertyChanged("NoteContent");
             }
         }
-
         public ICommand RemoveNote { get; }
 
         public NoteViewModel(string noteId)
