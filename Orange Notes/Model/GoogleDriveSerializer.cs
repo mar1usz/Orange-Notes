@@ -9,6 +9,7 @@ using System.Text.Json;
 using System;
 using System.Threading.Tasks;
 using Google.Apis.Drive.v3.Data;
+using Google.Apis.Upload;
 
 namespace Orange_Notes.Model
 {
@@ -62,25 +63,24 @@ namespace Orange_Notes.Model
             };
 
             string driveFileId = await GetDriveFileIdAsync(fileName);
-            if (driveFileId == null)
+            ResumableUpload request;
+            using (Stream stream = new MemoryStream(jsonBytes))
             {
-                FilesResource.CreateMediaUpload request;
-                using (Stream stream = new MemoryStream(jsonBytes))
+                if (driveFileId == null)
                 {
-                    request = service.Files.Create(fileMetadata, stream, "application/json");
-                    request.Fields = "id";
-                    await request.UploadAsync();
+                    request = new FilesResource.CreateMediaUpload(service, fileMetadata, stream, "application/json")
+                    {
+                        Fields = "id"
+                    };
                 }
-            }
-            else
-            {
-                FilesResource.UpdateMediaUpload request;
-                using (Stream stream = new MemoryStream(jsonBytes))
+                else
                 {
-                    request = service.Files.Update(fileMetadata, driveFileId, stream, "application/json");
-                    request.Fields = "id";
-                    await request.UploadAsync();
+                    request = new FilesResource.UpdateMediaUpload(service, fileMetadata, driveFileId, stream, "application/json")
+                    {
+                        Fields = "id"
+                    };
                 }
+                await request.UploadAsync();
             }
         }
 
