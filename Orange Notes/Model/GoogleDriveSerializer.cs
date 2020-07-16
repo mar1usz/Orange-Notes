@@ -63,24 +63,26 @@ namespace Orange_Notes.Model
             };
 
             string driveFileId = await GetDriveFileIdAsync(fileName);
-            ResumableUpload request;
             using (Stream stream = new MemoryStream(jsonBytes))
             {
-                if (driveFileId == null)
+                ResumableUpload request;
                 {
-                    request = new FilesResource.CreateMediaUpload(service, fileMetadata, stream, "application/json")
+                    if (driveFileId == null)
                     {
-                        Fields = "id"
-                    };
-                }
-                else
-                {
-                    request = new FilesResource.UpdateMediaUpload(service, fileMetadata, driveFileId, stream, "application/json")
+                        request = new FilesResource.CreateMediaUpload(service, fileMetadata, stream, "application/json")
+                        {
+                            Fields = "id"
+                        };
+                    }
+                    else
                     {
-                        Fields = "id"
-                    };
+                        request = new FilesResource.UpdateMediaUpload(service, fileMetadata, driveFileId, stream, "application/json")
+                        {
+                            Fields = "id"
+                        };
+                    }
+                    await request.UploadAsync();
                 }
-                await request.UploadAsync();
             }
         }
 
