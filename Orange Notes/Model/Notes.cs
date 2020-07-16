@@ -100,6 +100,15 @@ namespace Orange_Notes.Model
             }
         }
 
+        public bool ContainsNote(string noteId)
+        {
+            int i = NotesList.FindIndex(n => n.NoteId == noteId);
+            if (i != -1)
+                return true;
+            else
+                return false;
+        }
+
         public List<string> GetNoteIds()
         {
             List<string> ids = new List<string>();

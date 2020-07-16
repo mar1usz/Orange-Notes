@@ -1,4 +1,5 @@
 ﻿using Orange_Notes.Model;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -106,6 +107,9 @@ namespace Orange_Notes.ViewModel
 
         public NoteViewModel(string noteId)
         {
+            if (!Notes.ContainsNote(noteId))
+                throw new ArgumentException();
+
             NoteId = noteId;
             RemoveNote = new RelayCommand(parameter => Notes.RemoveNote(NoteId));
         }
