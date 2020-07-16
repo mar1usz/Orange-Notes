@@ -14,11 +14,10 @@ namespace Orange_Notes.View
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
-
     public partial class App : Application
     {
-        private Dictionary<string, Rect> Restorebounds;
-        private readonly string RestoreboundsFilepath = "Orange Notes Restore Bounds.json";
+        private Dictionary<string, Rect> restoreBounds;
+        private readonly string restoreBounds_filePath = "Orange Notes Restore Bounds.json";
 
         private async void Application_StartupAsync(object sender, StartupEventArgs e)
         {
@@ -39,7 +38,7 @@ namespace Orange_Notes.View
         {
             NoteViewModel.LoadSettings();
             JsonSerializer2<Dictionary<string, Rect>> json = new JsonSerializer2<Dictionary<string, Rect>>();
-            Restorebounds = json.Deserialize(RestoreboundsFilepath);
+            restoreBounds = json.Deserialize(restoreBounds_filePath);
         }
 
         private async Task Application_LoadNotesAsync()
@@ -60,8 +59,8 @@ namespace Orange_Notes.View
                 foreach (string noteId in NoteViewModel.GetNoteIds())
                 {
                     NoteWindow n = new NoteWindow(noteId);
-                    if (Restorebounds.ContainsKey(noteId))
-                        n.setRestoreBounds(Restorebounds[noteId]);
+                    if (restoreBounds.ContainsKey(noteId))
+                        n.setRestoreBounds(restoreBounds[noteId]);
                     n.Show();
                 }
             }
@@ -85,11 +84,11 @@ namespace Orange_Notes.View
         {
             NoteViewModel.SaveSettings();
             NoteWindow[] noteWindows = this.GetWindowsOfType<NoteWindow>();
-            Restorebounds.Clear();
+            restoreBounds.Clear();
             foreach (NoteWindow w in noteWindows)
-                Restorebounds.Add(w.NoteId, w.RestoreBounds);
+                restoreBounds.Add(w.NoteId, w.RestoreBounds);
             JsonSerializer2<Dictionary<string, Rect>> json = new JsonSerializer2<Dictionary<string, Rect>>();
-            json.Serialize(Restorebounds, RestoreboundsFilepath);
+            json.Serialize(restoreBounds, restoreBounds_filePath);
         }
 
         private async Task Application_SaveNotesAsync()
@@ -103,17 +102,14 @@ namespace Orange_Notes.View
             this.CloseWindowsOfType<ConnectingWindow>();
         }
 
-        private void Application_SessionEnding(object sender, SessionEndingCancelEventArgs e)
+        private async void Application_SessionEndingAsync(object sender, SessionEndingCancelEventArgs e)
         {
             e.Cancel = true;
+            Application_HideAllWindows();
             Application_SaveSettings();
-            Application_SaveNotes();
+            await Application_SaveNotesAsync();
             e.Cancel = false;
-        }
-
-        private void Application_SaveNotes()
-        {
-            NoteViewModel.SaveNotes();
+            Shutdown();
         }
 
         private void Application_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)

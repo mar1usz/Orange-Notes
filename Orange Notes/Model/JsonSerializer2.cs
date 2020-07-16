@@ -6,29 +6,6 @@ namespace Orange_Notes.Model
 {
     public class JsonSerializer2<T> : ISerializer<T> where T : new()
     {
-        public void Serialize(T objToSerialize, string filePath)
-        {
-            JsonSerializerOptions jsonOptions = new JsonSerializerOptions()
-            {
-                WriteIndented = true
-            };
-            string jsonString = JsonSerializer.Serialize(objToSerialize, jsonOptions);
-            File.WriteAllText(filePath, jsonString);
-        }
-
-        public T Deserialize(string filePath)
-        {
-            if (File.Exists(filePath))
-            {
-                string jsonString = File.ReadAllText(filePath);
-                return JsonSerializer.Deserialize<T>(jsonString);
-            }
-            else
-            {
-                return new T();
-            }
-        }
-
         public async Task SerializeAsync(T objToSerialize, string filePath)
         {
             JsonSerializerOptions jsonOptions = new JsonSerializerOptions()
@@ -50,6 +27,30 @@ namespace Orange_Notes.Model
                 {
                     return await JsonSerializer.DeserializeAsync<T>(stream);
                 }
+            }
+            else
+            {
+                return new T();
+            }
+        }
+
+        public void Serialize(T objToSerialize, string filePath)
+        {
+            JsonSerializerOptions jsonOptions = new JsonSerializerOptions()
+            {
+                WriteIndented = true
+            };
+
+            string jsonString = JsonSerializer.Serialize(objToSerialize, jsonOptions);
+            File.WriteAllText(filePath, jsonString);
+        }
+
+        public T Deserialize(string filePath)
+        {
+            if (File.Exists(filePath))
+            {
+                string jsonString = File.ReadAllText(filePath);
+                return JsonSerializer.Deserialize<T>(jsonString);
             }
             else
             {

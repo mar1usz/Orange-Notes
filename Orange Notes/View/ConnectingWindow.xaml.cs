@@ -6,7 +6,6 @@ namespace Orange_Notes.View
     /// <summary>
     /// Interaction logic for ConnectingWindow.xaml
     /// </summary>
-
     public partial class ConnectingWindow : Window
     {
         public ConnectingWindow()

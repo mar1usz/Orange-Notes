@@ -15,114 +15,46 @@ namespace Orange_Notes.Model
     public class GoogleDriveSerializer<T> : ISerializer<T> where T : new()
     {
         private DriveService service = null;
-        private readonly string credentialsFilePath = "credentials.json";
+        private readonly string credentials_filePath = "credentials.json";
 
-        public void Serialize(T objToUpload, string fileName)
-        {
-            Authorize();
-            JsonSerializerOptions jsonOptions = new JsonSerializerOptions()
-            {
-                WriteIndented = true
-            };
-            byte[] jsonBytes = JsonSerializer.SerializeToUtf8Bytes(objToUpload, jsonOptions);
-
-            var fileMetadata = new Google.Apis.Drive.v3.Data.File()
-            {
-                Name = fileName
-            };
-
-            string driveFileId = GetDriveFileId(fileName);
-            if (driveFileId == null)
-            {
-                FilesResource.CreateMediaUpload request;
-                using (Stream stream = new MemoryStream(jsonBytes))
-                {
-                    request = service.Files.Create(fileMetadata, stream, "application/json");
-                    request.Fields = "id";
-                    request.Upload();
-                }
-            }
-            else
-            {
-                FilesResource.UpdateMediaUpload request;
-                using (Stream stream = new MemoryStream(jsonBytes))
-                {
-                    request = service.Files.Update(fileMetadata, driveFileId, stream, "application/json");
-                    request.Fields = "id";
-                    request.Upload();
-                }
-            }
-        }
-
-        public T Deserialize(string fileName)
-        {
-            Authorize();
-            string driveFileId = GetDriveFileId(fileName);
-            if (driveFileId == null)
-            {
-                return new T();
-            }
-            else
-            {
-                FilesResource.GetRequest request;
-                using (Stream stream = new MemoryStream())
-                {
-                    request = service.Files.Get(driveFileId);
-                    request.Fields = "id";
-                    request.DownloadWithStatus(stream);
-
-                    stream.Position = 0;
-                    StreamReader reader = new StreamReader(stream);
-                    return JsonSerializer.Deserialize<T>(reader.ReadToEnd());
-                }
-            }
-        }
-
-        private void Authorize()
+        private async Task AuthorizeAsync()
         {
             if (service != null)
                 return;
-            string[] Scopes = { DriveService.Scope.DriveFile };
-            string ApplicationName = "Orange Notes";
+
+            string[] scopes = { DriveService.Scope.DriveFile };
+            string applicationName = "Orange Notes";
             UserCredential credential;
-            using (var stream = new FileStream(credentialsFilePath, FileMode.Open, FileAccess.Read))
+
+            using (var stream = new FileStream(credentials_filePath, FileMode.Open, FileAccess.Read))
             {
                 string credPath = "token.json";
-                credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
-                    GoogleClientSecrets.Load(stream).Secrets,
-                    Scopes,
+                // ?? AuthorizeAsync doesn't run asynchronously
+                credential = await Task.Run(() => GoogleWebAuthorizationBroker.AuthorizeAsync(
+                    stream,
+                    scopes,
                     "Scooby Doo",
                     CancellationToken.None,
-                    new FileDataStore(credPath, true)).Result;
+                    new FileDataStore(credPath, true)));
             }
+
             service = new DriveService(new BaseClientService.Initializer()
             {
                 HttpClientInitializer = credential,
-                ApplicationName = ApplicationName,
+                ApplicationName = applicationName,
             });
             service.HttpClient.Timeout = TimeSpan.FromSeconds(120);
         }
 
-        private string GetDriveFileId(string fileName)
-        {
-            FilesResource.ListRequest listRequest = service.Files.List();
-            IList<Google.Apis.Drive.v3.Data.File> files = listRequest.Execute().Files;
-            foreach (var f in files)
-            {
-                if (f.Name == fileName)
-                    return f.Id;
-            }
-            return null;
-        }
-
-        public async Task SerializeAsync(T objToUpload, string fileName)
+        public async Task SerializeAsync(T objToSerialize, string fileName)
         {
             await AuthorizeAsync();
+
             JsonSerializerOptions jsonOptions = new JsonSerializerOptions()
             {
                 WriteIndented = true
             };
-            byte[] jsonBytes = JsonSerializer.SerializeToUtf8Bytes(objToUpload, jsonOptions);
+            byte[] jsonBytes = JsonSerializer.SerializeToUtf8Bytes(objToSerialize, jsonOptions);
 
             var fileMetadata = new Google.Apis.Drive.v3.Data.File()
             {
@@ -155,6 +87,7 @@ namespace Orange_Notes.Model
         public async Task<T> DeserializeAsync(string fileName)
         {
             await AuthorizeAsync();
+
             string driveFileId = await GetDriveFileIdAsync(fileName);
             if (driveFileId == null)
             {
@@ -174,36 +107,11 @@ namespace Orange_Notes.Model
             }
         }
 
-        private async Task AuthorizeAsync()
-        {
-            if (service != null)
-                return;
-            string[] Scopes = { DriveService.Scope.DriveFile };
-            string ApplicationName = "Orange Notes";
-            UserCredential credential;
-            using (var stream = new FileStream(credentialsFilePath, FileMode.Open, FileAccess.Read))
-            {
-                string credPath = "token.json";
-                // ?? AuthorizeAsync doesn't run asynchronously
-                credential = await Task.Run(() => GoogleWebAuthorizationBroker.AuthorizeAsync(
-                    stream,
-                    Scopes,
-                    "Scooby Doo",
-                    CancellationToken.None,
-                    new FileDataStore(credPath, true)));
-            }
-            service = new DriveService(new BaseClientService.Initializer()
-            {
-                HttpClientInitializer = credential,
-                ApplicationName = ApplicationName,
-            });
-            service.HttpClient.Timeout = TimeSpan.FromSeconds(120);
-        }
-
         private async Task<string> GetDriveFileIdAsync(string fileName)
         {
             FilesResource.ListRequest listRequest = service.Files.List();
             FileList listRequestResult = await listRequest.ExecuteAsync();
+
             IList<Google.Apis.Drive.v3.Data.File> files = listRequestResult.Files;
             foreach (var f in files)
             {

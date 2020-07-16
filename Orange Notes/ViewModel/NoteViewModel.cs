@@ -16,65 +16,52 @@ namespace Orange_Notes.ViewModel
     {
         public static Storage Storage
         {
-            get
-            {
-                return _storage;
-            }
+            get => _storage;
             set
             {
                 switch (value)
                 {
                     case Storage.Json:
                         _storage = Storage.Json;
-                        Notes.Serializer = new JsonSerializer2<List<Note>>();
+                        notes.Serializer = new JsonSerializer2<List<Note>>();
                         break;
                     case Storage.GoogleDrive:
                         _storage = Storage.GoogleDrive;
-                        Notes.Serializer = new GoogleDriveSerializer<List<Note>>();
+                        notes.Serializer = new GoogleDriveSerializer<List<Note>>();
                         break;
                 }
             }
         }
         private static Storage _storage;
-        private static Notes Notes = new Notes();
-        private static readonly string NotesFilepath = "Orange Notes.json";
-        private static readonly string SettingsFilepath = "Orange Notes Settings.json";
+        private static Notes notes = new Notes();
+        private static readonly string notes_filePath = "Orange Notes.json";
+        private static readonly string settings_filePath = "Orange Notes Settings.json";
 
         public static List<string> GetNoteIds()
         {
-            return Notes.GetNoteIds();
-        }
-
-        public static void SaveNotes()
-        {
-            Notes.Serialize(NotesFilepath);
-        }
-
-        public static void LoadNotes()
-        {
-            Notes.Deserialize(NotesFilepath);
+            return notes.GetNoteIds();
         }
 
         public static async Task SaveNotesAsync()
         {
-            await Notes.SerializeAsync(NotesFilepath);
+            await notes.SerializeAsync(notes_filePath);
         }
 
         public static async Task LoadNotesAsync()
         {
-            await Notes.DeserializeAsync(NotesFilepath);
+            await notes.DeserializeAsync(notes_filePath);
         }
 
         public static void SaveSettings()
         {
             JsonSerializer2<Storage> json = new JsonSerializer2<Storage>();
-            json.Serialize(Storage, SettingsFilepath);
+            json.Serialize(Storage, settings_filePath);
         }
 
         public static void LoadSettings()
         {
             JsonSerializer2<Storage> json = new JsonSerializer2<Storage>();
-            Storage = json.Deserialize(SettingsFilepath);
+            Storage = json.Deserialize(settings_filePath);
         }
 
 
@@ -83,11 +70,11 @@ namespace Orange_Notes.ViewModel
         {
             get
             {
-                return Notes.GetNoteTitle(NoteId);
+                return notes.GetNoteTitle(NoteId);
             }
             set
             {
-                Notes.SetNoteTitle(NoteId, value);
+                notes.SetNoteTitle(NoteId, value);
                 NotifyPropertyChanged("NoteTitle");
             }
         }
@@ -95,11 +82,11 @@ namespace Orange_Notes.ViewModel
         {
             get
             {
-                return Notes.GetNoteContent(NoteId);
+                return notes.GetNoteContent(NoteId);
             }
             set
             {
-                Notes.SetNoteContent(NoteId, value);
+                notes.SetNoteContent(NoteId, value);
                 NotifyPropertyChanged("NoteContent");
             }
         }
@@ -107,17 +94,17 @@ namespace Orange_Notes.ViewModel
 
         public NoteViewModel(string noteId)
         {
-            if (!Notes.ContainsNote(noteId))
+            if (!notes.ContainsNote(noteId))
                 throw new ArgumentException();
 
             NoteId = noteId;
-            RemoveNote = new RelayCommand(parameter => Notes.RemoveNote(NoteId));
+            RemoveNote = new RelayCommand(parameter => notes.RemoveNote(NoteId));
         }
 
         public NoteViewModel()
         {
-            NoteId = Notes.AddNote();
-            RemoveNote = new RelayCommand(parameter => Notes.RemoveNote(NoteId));
+            NoteId = notes.AddNote();
+            RemoveNote = new RelayCommand(parameter => notes.RemoveNote(NoteId));
         }
     }
 }

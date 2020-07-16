@@ -8,7 +8,6 @@ namespace Orange_Notes.View
     /// <summary>
     /// Interaction logic for NoteWindow.xaml
     /// </summary>
-
     public partial class NoteWindow : Window
     {
         public string NoteId
