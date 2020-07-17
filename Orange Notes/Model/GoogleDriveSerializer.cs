@@ -50,20 +50,21 @@ namespace Orange_Notes.Model
         {
             await AuthorizeAsync();
 
-            JsonSerializerOptions jsonOptions = new JsonSerializerOptions()
-            {
-                WriteIndented = true
-            };
-            byte[] jsonBytes = JsonSerializer.SerializeToUtf8Bytes(objToSerialize, jsonOptions);
-
             var fileMetadata = new Google.Apis.Drive.v3.Data.File()
             {
                 Name = fileName
             };
 
             string driveFileId = await GetDriveFileIdAsync(fileName);
-            using (Stream stream = new MemoryStream(jsonBytes))
+            using (Stream stream = new MemoryStream())
             {
+                JsonSerializerOptions jsonOptions = new JsonSerializerOptions()
+                {
+                    WriteIndented = true
+                };
+                await JsonSerializer.SerializeAsync(stream, objToSerialize, jsonOptions);
+                stream.Position = 0;
+
                 ResumableUpload request;
                 {
                     if (driveFileId == null)
