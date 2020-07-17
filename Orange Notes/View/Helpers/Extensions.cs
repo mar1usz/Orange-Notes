@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 
 namespace Orange_Notes.View
@@ -15,33 +16,33 @@ namespace Orange_Notes.View
 
         public static void CloseWindowsOfType<windowType>(this Application a) where windowType : Window
         {
-            windowType[] windowTypeWindows = a.Windows.OfType<windowType>().ToArray();
+            IEnumerable<windowType> windowTypeWindows = a.Windows.OfType<windowType>();
             foreach (windowType w in windowTypeWindows)
                 w.Close();
         }
 
         public static void HideWindowsOfType<windowType>(this Application a) where windowType : Window
         {
-            windowType[] windowTypeWindows = a.Windows.OfType<windowType>().ToArray();
+            IEnumerable<windowType> windowTypeWindows = a.Windows.OfType<windowType>();
             foreach (windowType w in windowTypeWindows)
                 w.Hide();
         }
 
         public static int CountWindowsOfType<windowType>(this Application a) where windowType : Window
         {
-            windowType[] windowTypeWindows = a.Windows.OfType<windowType>().ToArray();
+            IEnumerable<windowType> windowTypeWindows = a.Windows.OfType<windowType>();
             return windowTypeWindows.Count();
         }
 
-        public static windowType[] GetWindowsOfType<windowType>(this Application a) where windowType : Window
+        public static IEnumerable<windowType> GetWindowsOfType<windowType>(this Application a) where windowType : Window
         {
-            windowType[] windowTypeWindows = a.Windows.OfType<windowType>().ToArray();
+            IEnumerable<windowType> windowTypeWindows = a.Windows.OfType<windowType>();
             return windowTypeWindows;
         }
 
         public static bool WindowOfTypeExists<windowType>(this Application a) where windowType : Window
         {
-            windowType[] windowTypeWindows = a.Windows.OfType<windowType>().ToArray();
+            IEnumerable<windowType> windowTypeWindows = a.Windows.OfType<windowType>();
             return windowTypeWindows.Any();
         }
     }
