@@ -25,12 +25,14 @@ namespace Orange_Notes.View
         {
             InitializeComponent();
             DataContext = new NoteViewModel();
+            KeyDown += NoteWindow_KeyDown;
         }
 
         public NoteWindow(string noteId)
         {
             InitializeComponent();
             DataContext = new NoteViewModel(noteId);
+            KeyDown += NoteWindow_KeyDown;
         }
 
         private async void RemoveButton_ClickAsync(object sender, RoutedEventArgs e)
@@ -65,6 +67,15 @@ namespace Orange_Notes.View
         {
             if (Application.Current is App app)
                 await app.Application_ExitAsync();
+        }
+
+        private async void NoteWindow_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyboardDevice.Modifiers == ModifierKeys.Alt && e.Key == Key.System && e.SystemKey == Key.F4)
+            {
+                e.Handled = true;
+                await Application_ExitAsync();
+            }
         }
 
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
