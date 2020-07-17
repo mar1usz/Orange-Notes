@@ -1,7 +1,7 @@
 # Orange Notes
 Sticky notes in C# with Google Drive:
  
-![image](https://user-images.githubusercontent.com/62397363/79151951-ab0fe480-7dcb-11ea-9e84-12433661bdc2.png)
+![image](https://user-images.githubusercontent.com/62397363/87773147-04e8d600-c823-11ea-99ea-fb0ab7e21323.png)
 
 ## Features:
 - Save notes on your desktop
