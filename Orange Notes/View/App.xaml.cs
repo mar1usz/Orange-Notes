@@ -69,10 +69,15 @@ namespace Orange_Notes.View
 
         public async Task Application_ExitAsync()
         {
+            await Application_CommonExitRoutineAsync();
+            Shutdown();
+        }
+
+        private async Task Application_CommonExitRoutineAsync()
+        {
             Application_HideAllWindows();
             Application_SaveSettings();
             await Application_SaveNotesAsync();
-            Shutdown();
         }
 
         private void Application_HideAllWindows()
@@ -105,9 +110,7 @@ namespace Orange_Notes.View
         private async void Application_SessionEndingAsync(object sender, SessionEndingCancelEventArgs e)
         {
             e.Cancel = true;
-            Application_HideAllWindows();
-            Application_SaveSettings();
-            await Application_SaveNotesAsync();
+            await Application_CommonExitRoutineAsync();
             e.Cancel = false;
             Shutdown();
         }
