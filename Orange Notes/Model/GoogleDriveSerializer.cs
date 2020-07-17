@@ -64,7 +64,6 @@ namespace Orange_Notes.Model
                 };
                 await JsonSerializer.SerializeAsync(stream, objToSerialize, jsonOptions);
                 stream.Position = 0;
-
                 ResumableUpload request;
                 {
                     if (driveFileId == null)
