@@ -88,7 +88,6 @@ namespace Orange_Notes.View
         private void Application_SaveSettings()
         {
             NoteViewModel.SaveSettings();
-
             IEnumerable<NoteWindow> noteWindows = this.GetWindowsOfType<NoteWindow>();
             restoreBounds.Clear();
             foreach (NoteWindow w in noteWindows)
