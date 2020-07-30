@@ -112,6 +112,8 @@ namespace Orange_Notes.Model
 
         private async Task<string> GetDriveFileIdAsync(string fileName)
         {
+            await AuthorizeAsync();
+
             FilesResource.ListRequest listRequest = service.Files.List();
             FileList listRequestResult = await listRequest.ExecuteAsync();
 
