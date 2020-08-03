@@ -1,5 +1,5 @@
 # Orange Notes
-Sticky notes in C# with Google Drive:<br/>
+Sticky notes in C# WPF with Google Drive:<br/>
 ![image](https://user-images.githubusercontent.com/62397363/87773147-04e8d600-c823-11ea-99ea-fb0ab7e21323.png)
 
 ## Features:
