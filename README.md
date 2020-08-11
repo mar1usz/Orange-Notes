@@ -12,7 +12,7 @@ Sticky notes in C# WPF .NET Core with Google Drive:
 - .NET Core 3.1
 - Visual Studio 2019
 - (optional) "credentials.json" file to access Google Drive API (see: https://developers.google.com/drive/api/v3/about-auth):
-```JSON
+```
 {
     "installed": {
         "client_id": "xxxxxxxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.apps.googleusercontent.com",
