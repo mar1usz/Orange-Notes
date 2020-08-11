@@ -22,6 +22,6 @@ Sticky notes in C# .NET Core WPF with Google Drive:
 ```
 
 ## Credits:
-- Google Drive API client library by https://www.nuget.org/packages/Google.Apis.Drive.v3/ (Apache-2.0 license)
+- Google Drive API client library by https://www.nuget.org/packages/Google.Apis.Drive.v3 (Apache-2.0 license)
 - Menu icons by https://ionicons.com (MIT license)
 - Loading spinners by https://github.com/blackspike/Xaml-Spinners-WPF (MIT license)
