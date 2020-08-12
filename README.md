@@ -1,5 +1,5 @@
 # Orange Notes
-Sticky notes in C# WPF .NET Core with Google Drive:
+Sticky notes with Google Drive in C# WPF .NET Core:
 ![image](https://user-images.githubusercontent.com/62397363/87773147-04e8d600-c823-11ea-99ea-fb0ab7e21323.png)
 
 ## Features:
