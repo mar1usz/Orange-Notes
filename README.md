@@ -22,6 +22,7 @@ Sticky notes with Google Drive in C# WPF .NET Core:
 ```
 
 ## Credits:
+- Desk Notes by https://github.com/dabager/DeskNotes
 - Google Drive API client library by https://www.nuget.org/packages/Google.Apis.Drive.v3 (Apache-2.0 license)
-- Menu icons by https://ionicons.com (MIT license)
-- Loading spinners by https://github.com/blackspike/Xaml-Spinners-WPF (MIT license)
+- Ionicons by https://ionicons.com (MIT license)
+- Free WPF loading spinners by https://github.com/blackspike/Xaml-Spinners-WPF (MIT license)
