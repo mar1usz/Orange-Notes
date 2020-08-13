@@ -17,7 +17,7 @@ namespace Orange_Notes.View
     public partial class App : Application
     {
         private Dictionary<string, Rect> restoreBounds;
-        private readonly string restoreBounds_filePath = "Orange Notes Restore Bounds.json";
+        private readonly string restoreBounds_filePath = "settings.restoreBounds.json";
 
         private async void Application_StartupAsync(object sender, StartupEventArgs e)
         {

@@ -34,8 +34,8 @@ namespace Orange_Notes.ViewModel
         }
         private static Storage _storage;
         private static Notes notes = new Notes();
-        private static readonly string notes_filePath = "Orange Notes.json";
-        private static readonly string settings_filePath = "Orange Notes Settings.json";
+        private static readonly string notes_filePath = "notes.json";
+        private static readonly string settings_filePath = "settings.json";
 
         public static List<string> GetNoteIds()
         {
