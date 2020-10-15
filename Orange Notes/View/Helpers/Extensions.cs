@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Windows;
 
-namespace Orange_Notes.View
+namespace Orange_Notes.View.Helpers
 {
     public static class Extensions
     {

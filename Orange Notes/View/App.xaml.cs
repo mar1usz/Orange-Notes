@@ -1,4 +1,5 @@
 ﻿using Orange_Notes.Model;
+using Orange_Notes.View.Helpers;
 using Orange_Notes.ViewModel;
 using System;
 using System.Collections.Generic;

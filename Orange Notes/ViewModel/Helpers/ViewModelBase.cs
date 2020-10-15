@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace Orange_Notes.ViewModel
+namespace Orange_Notes.ViewModel.Helpers
 {
     public abstract class ViewModelBase : INotifyPropertyChanged
     {

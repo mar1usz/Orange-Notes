@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using Orange_Notes.Model.Helpers;
+using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -8,6 +9,11 @@ namespace Orange_Notes.Model
     {
         public async Task SerializeAsync(T objToSerialize, string filePath)
         {
+            using (StreamWriter writer = File.CreateText(filePath))
+            {
+                await writer.ClearAsync();
+            }
+
             JsonSerializerOptions jsonOptions = new JsonSerializerOptions()
             {
                 WriteIndented = true

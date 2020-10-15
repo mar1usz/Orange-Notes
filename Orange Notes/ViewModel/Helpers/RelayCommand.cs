@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace Orange_Notes.ViewModel
+namespace Orange_Notes.ViewModel.Helpers
 {
     public class RelayCommand : ICommand
     {

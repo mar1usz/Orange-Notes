@@ -1,4 +1,5 @@
-﻿using Orange_Notes.ViewModel;
+﻿using Orange_Notes.View.Helpers;
+using Orange_Notes.ViewModel;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
