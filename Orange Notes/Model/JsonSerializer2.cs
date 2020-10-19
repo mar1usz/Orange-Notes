@@ -9,10 +9,7 @@ namespace Orange_Notes.Model
     {
         public async Task SerializeAsync(T objToSerialize, string filePath)
         {
-            using (StreamWriter writer = File.CreateText(filePath))
-            {
-                await writer.ClearAsync();
-            }
+            await File2.ClearAsync(filePath);
 
             JsonSerializerOptions jsonOptions = new JsonSerializerOptions()
             {
