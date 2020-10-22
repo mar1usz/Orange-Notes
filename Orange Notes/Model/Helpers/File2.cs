@@ -5,9 +5,9 @@ namespace Orange_Notes.Model.Helpers
 {
     public static class File2
     {
-        public static Task ClearAsync(string path)
+        public static async Task ClearAsync(string path)
         {
-            return File.WriteAllTextAsync(path, string.Empty);
+            await File.WriteAllTextAsync(path, string.Empty);
         }
     }
 }

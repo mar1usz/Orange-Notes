@@ -7,14 +7,14 @@ namespace Orange_Notes.Model
 {
     public class JsonSerializer2<T> : ISerializer<T> where T : new()
     {
+        private JsonSerializerOptions jsonOptions = new JsonSerializerOptions()
+        {
+            WriteIndented = true
+        };
+
         public async Task SerializeAsync(T objToSerialize, string filePath)
         {
             await File2.ClearAsync(filePath);
-
-            JsonSerializerOptions jsonOptions = new JsonSerializerOptions()
-            {
-                WriteIndented = true
-            };
 
             using (FileStream stream = File.OpenWrite(filePath))
             {
@@ -39,11 +39,6 @@ namespace Orange_Notes.Model
 
         public void Serialize(T objToSerialize, string filePath)
         {
-            JsonSerializerOptions jsonOptions = new JsonSerializerOptions()
-            {
-                WriteIndented = true
-            };
-
             string jsonString = JsonSerializer.Serialize(objToSerialize, jsonOptions);
             File.WriteAllText(filePath, jsonString);
         }
