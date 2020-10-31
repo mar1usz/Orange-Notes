@@ -68,17 +68,11 @@ namespace Orange_Notes.Model
                 {
                     if (driveFileId == null)
                     {
-                        request = new FilesResource.CreateMediaUpload(service, fileMetadata, stream, "application/json")
-                        {
-                            Fields = "id"
-                        };
+                        request = new FilesResource.CreateMediaUpload(service, fileMetadata, stream, "application/json");
                     }
                     else
                     {
-                        request = new FilesResource.UpdateMediaUpload(service, fileMetadata, driveFileId, stream, "application/json")
-                        {
-                            Fields = "id"
-                        };
+                        request = new FilesResource.UpdateMediaUpload(service, fileMetadata, driveFileId, stream, "application/json");
                     }
                     await request.UploadAsync();
                 }
@@ -96,10 +90,7 @@ namespace Orange_Notes.Model
             }
             else
             {
-                FilesResource.GetRequest request = new FilesResource.GetRequest(service, driveFileId)
-                {
-                    Fields = "id"
-                };
+                FilesResource.GetRequest request = new FilesResource.GetRequest(service, driveFileId);
 
                 using (Stream stream = new MemoryStream())
                 {
