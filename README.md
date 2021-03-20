@@ -4,13 +4,13 @@ A Windows desktop application in C# WPF .NET Core using Google Drive API:<br/>![
 ## Features:
 - Save notes on your desktop
 - Store notes in .json file either locally or on Google Drive
-- Run at startup (optional)
+- Run at startup
 - Doesn't take up any space on your taskbar
 
 ## Prerequisites:
 - .NET Core 3.1
 - Visual Studio 2019
-- (optional) credentials.json to access Google Drive API (see: https://developers.google.com/drive/api/v3/about-auth):
+- [optional] credentials.json to access Google Drive API (see: https://developers.google.com/drive/api/v3/about-auth):
 ```
 {
     "installed": {
