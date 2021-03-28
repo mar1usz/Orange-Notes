@@ -23,5 +23,5 @@ A Windows desktop application in C# WPF .NET Core using Google Drive API:<br/>![
 ## Credits:
 - DeskNotes by https://github.com/dabager/DeskNotes
 - Google.Apis.Drive.v3 by https://www.nuget.org/packages/Google.Apis.Drive.v3 (Apache-2.0 license)
-- XAML Spinners WPF by https://github.com/blackspike/Xaml-Spinners-WPF (MIT license)
+- Xaml-Spinners-WPF by https://github.com/blackspike/Xaml-Spinners-WPF (MIT license)
 - Ionicons by https://ionicons.com (MIT license)
